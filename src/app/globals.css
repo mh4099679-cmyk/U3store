@@ -1,0 +1,361 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --u3-bg: #F7F7F5;
+  --u3-surface: #FFFFFF;
+  --u3-elevated: #FFFFFF;
+  --u3-text: #111214;
+  --u3-text-secondary: #73777D;
+  --u3-border: #E9EAEC;
+  --u3-silver: #BFC2C6;
+  --u3-charcoal: #292B2E;
+}
+
+html.dark {
+  --u3-bg: #111214;
+  --u3-surface: #1A1C1F;
+  --u3-elevated: #22252A;
+  --u3-text: #F5F5F5;
+  --u3-text-secondary: #A7ABB1;
+  --u3-border: #30343A;
+  --u3-silver: #BFC2C6;
+  --u3-charcoal: #292B2E;
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--u3-bg);
+  color: var(--u3-text);
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Ensure no media causes horizontal overflow on mobile screens */
+img, svg, video, canvas, audio, iframe, embed, object {
+  max-width: 100%;
+}
+
+/* Explicit Typography: Sleek Modern Streetwear English (Outfit + Inter) + Supreme Luxury Arabic (Tajawal + IBM Plex) */
+[dir="rtl"], [dir="rtl"] body {
+  font-family: var(--font-tajawal), var(--font-ibm-arabic), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+[dir="rtl"] h1,
+[dir="rtl"] h2,
+[dir="rtl"] h3,
+[dir="rtl"] h4,
+[dir="rtl"] h5,
+[dir="rtl"] h6,
+[dir="rtl"] .font-heading {
+  font-family: var(--font-tajawal), var(--font-ibm-arabic), sans-serif;
+  letter-spacing: normal;
+  font-weight: 700;
+}
+
+[dir="ltr"], [dir="ltr"] body {
+  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+[dir="ltr"] h1,
+[dir="ltr"] h2,
+[dir="ltr"] h3,
+[dir="ltr"] h4,
+[dir="ltr"] h5,
+[dir="ltr"] h6,
+[dir="ltr"] .font-heading {
+  font-family: var(--font-outfit), var(--font-inter), sans-serif;
+  letter-spacing: -0.02em;
+}
+
+/* Careful Dark Mode Surface & Input Adaptation */
+html.dark body {
+  background-color: #111214;
+  color: #F5F5F5;
+}
+
+html.dark .bg-offwhite {
+  background-color: #111214 !important;
+}
+
+html.dark .bg-white {
+  background-color: #22252A !important;
+  color: #F5F5F5;
+}
+
+html.dark .text-jet {
+  color: #F5F5F5 !important;
+}
+
+html.dark .text-neutralgray {
+  color: #A7ABB1 !important;
+}
+
+html.dark .border-black\/10,
+html.dark .border-black\/15,
+html.dark .border-black\/5,
+html.dark .border-silver\/40,
+html.dark .border-silver\/50,
+html.dark .border-silver\/60 {
+  border-color: #30343A !important;
+}
+
+html.dark input:not([type="checkbox"]):not([type="radio"]),
+html.dark select,
+html.dark textarea {
+  background-color: #1A1C1F !important;
+  color: #F5F5F5 !important;
+  border-color: #30343A !important;
+}
+
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+  color: #73777D !important;
+}
+
+/* Continuous Seamless Marquee Keyframes */
+@keyframes u3-marquee-ltr {
+  0% {
+    transform: translate3d(0%, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes u3-marquee-rtl {
+  0% {
+    transform: translate3d(0%, 0, 0);
+  }
+  100% {
+    transform: translate3d(50%, 0, 0);
+  }
+}
+
+.u3-marquee-track-ltr {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: u3-marquee-ltr var(--marquee-duration, 28s) linear infinite;
+}
+
+.u3-marquee-track-rtl {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: u3-marquee-rtl var(--marquee-duration, 28s) linear infinite;
+}
+
+.u3-marquee-pause:hover .u3-marquee-track-ltr,
+.u3-marquee-pause:hover .u3-marquee-track-rtl {
+  animation-play-state: paused;
+}
+
+/* Subtle Link Animated Underline */
+.u3-link-underline {
+  position: relative;
+  display: inline-block;
+}
+
+.u3-link-underline::after {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1px;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: inline-end;
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.u3-link-underline:hover::after {
+  transform: scaleX(1);
+  transform-origin: inline-start;
+}
+
+/* Subtle Entrance Reveal */
+@keyframes u3-fade-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.u3-reveal {
+  animation: u3-fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* 3D Floating & Perspective Micro-Animations */
+@keyframes u3-float-slow {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(-1.5deg);
+  }
+}
+
+.u3-floating {
+  animation: u3-float-slow 6s ease-in-out infinite;
+}
+
+/* 3D Perspective Card Depth */
+.u3-3d-card {
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+}
+
+.u3-3d-card:hover {
+  transform: translateY(-6px) rotateX(2deg) rotateY(-2deg);
+}
+
+/* Modern Glow Borders & Glass Panels */
+.u3-glass-panel {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(225, 227, 229, 0.7);
+}
+
+.u3-glass-dark {
+  background: rgba(17, 18, 20, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Modern Interactive Glow & Micro-animations */
+@keyframes u3PulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.15);
+  }
+}
+
+@keyframes u3Shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes u3FloatSlow {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.u3-shimmer {
+  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0) 100%);
+  background-size: 200% 100%;
+  animation: u3Shimmer 3s infinite linear;
+}
+
+.u3-glow-interactive {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.u3-glow-interactive:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px -6px rgba(0, 0, 0, 0.12), 0 0 16px rgba(0, 0, 0, 0.04);
+}
+
+.u3-float-badge {
+  animation: u3FloatSlow 4s ease-in-out infinite;
+}
+
+/* Custom Sleek Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #BFC2C6;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #73777D;
+}
+
+/* Mobile Touch & Scroll Enhancements */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button, a, input, select, textarea {
+  touch-action: manipulation;
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .u3-marquee-track-ltr,
+  .u3-marquee-track-rtl,
+  .u3-reveal,
+  .u3-floating,
+  .u3-3d-card {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  body,
+  html.dark body {
+    background: #ffffff !important;
+    color: #111214 !important;
+  }
+}
+
+/* Hide Next.js dev indicator badge completely */
+nextjs-portal,
+[data-nextjs-toast],
+div[data-nextjs-dev-tools-button],
+[data-nextjs-dev-tools-badge],
+button[aria-label*="Next.js"],
+div:has(> button[aria-label*="Next.js"]),
+#__next-build-watcher {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
