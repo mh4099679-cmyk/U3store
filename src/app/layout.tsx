@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import { Outfit, Inter, Tajawal, IBM_Plex_Sans_Arabic } from "next/font/google";
 import "./globals.css";
 import { getStorefrontLanguage, getStorefrontTheme } from "@/lib/auth/session";
 import { getDb, queryOne } from "@/lib/db";
@@ -10,32 +9,6 @@ export const viewport: Viewport = {
   maximumScale: 5,
   viewportFit: "cover",
 };
-
-// Ultra-clean, modern luxury streetwear English typography
-const outfit = Outfit({
-  subsets: ["latin"],
-  variable: "--font-outfit",
-  weight: ["500", "600", "700", "800", "900"],
-});
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  weight: ["400", "500", "600", "700"],
-});
-
-// Premium, modern, elegant Arabic typography
-const tajawal = Tajawal({
-  subsets: ["arabic"],
-  variable: "--font-tajawal",
-  weight: ["400", "500", "700", "800", "900"],
-});
-
-const ibmPlexArabic = IBM_Plex_Sans_Arabic({
-  subsets: ["arabic"],
-  variable: "--font-ibm-arabic",
-  weight: ["400", "500", "600", "700"],
-});
 
 export async function generateMetadata(): Promise<Metadata> {
   const lang = await getStorefrontLanguage();
@@ -102,9 +75,7 @@ export default async function RootLayout({
       lang={lang}
       dir={dir}
       suppressHydrationWarning
-      className={`${outfit.variable} ${inter.variable} ${tajawal.variable} ${ibmPlexArabic.variable} ${
-        theme === "dark" ? "dark" : ""
-      }`}
+      className={theme === "dark" ? "dark" : ""}
     >
       <head>
         <link rel="icon" href="/icon.png" type="image/png" />
