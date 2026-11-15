@@ -26,6 +26,7 @@ export async function generateMetadata(): Promise<Metadata> {
       : settings?.seo_description_en || "U3 STORE — Premium Streetwear & Modern Footwear in Egypt.";
 
   return {
+    metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
     title,
     description,
     icons: {
