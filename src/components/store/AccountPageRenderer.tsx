@@ -48,15 +48,48 @@ export async function renderAccountPage(initialTab = "orders") {
       )
     : [];
 
-  const returns = queryAll<any>(
+  const formalReturns = queryAll<any>(
     db,
-    `SELECT rr.*, o.order_number
+    `SELECT rr.*, o.order_number, o.id as original_order_id, o.total_amount
      FROM return_requests rr
      JOIN orders o ON o.id = rr.order_id
      WHERE rr.user_id = ?
      ORDER BY rr.created_at DESC`,
     [customer.id]
   );
+
+  const returnedOrders = queryAll<any>(
+    db,
+    `SELECT id, order_number, order_status, created_at, updated_at, total_amount
+     FROM orders
+     WHERE user_id = ? AND order_status IN ('RETURNED', 'EXCHANGED', 'RETURN_REQUESTED')
+     ORDER BY COALESCE(updated_at, created_at) DESC`,
+    [customer.id]
+  );
+
+  const formalReturnOrderIds = new Set(formalReturns.map((r) => r.order_id));
+  const mappedOrderReturns = returnedOrders
+    .filter((o) => !formalReturnOrderIds.has(o.id))
+    .map((o) => ({
+      id: `ord-ret-${o.id}`,
+      return_number: `RET-${o.order_number}`,
+      order_id: o.id,
+      order_number: o.order_number,
+      request_type: o.order_status === "EXCHANGED" ? "EXCHANGE" : "RETURN",
+      reason:
+        lang === "ar"
+          ? o.order_status === "EXCHANGED"
+            ? "طلب استبدال منتج مسجل"
+            : "طلب استرجاع أوردر مسجل"
+          : o.order_status === "EXCHANGED"
+          ? "Product Exchange Processed"
+          : "Order Return Processed",
+      status: o.order_status,
+      created_at: o.updated_at || o.created_at,
+      total_amount: o.total_amount,
+    }));
+
+  const returns = [...formalReturns, ...mappedOrderReturns];
 
   const notifications = queryAll<any>(
     db,

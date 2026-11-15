@@ -832,27 +832,63 @@ export function AccountDashboardClient({
               {lang === "ar" ? "طلبات الاسترجاع والاستبدال" : "RETURNS & EXCHANGES"}
             </h2>
             {returns.length === 0 ? (
-              <p className="text-xs text-neutralgray">
+              <p className="text-sm text-neutralgray py-6">
                 {lang === "ar"
                   ? "لا توجد طلبات استرجاع أو استبدال حالياً."
                   : "No return or exchange requests submitted."}
               </p>
             ) : (
-              <div className="space-y-3">
+              <div className="space-y-4">
                 {returns.map((r) => (
                   <div
                     key={r.id}
-                    className="border border-silver p-4 bg-offwhite flex items-center justify-between text-xs"
+                    className="border border-silver/60 p-5 bg-offwhite flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
                   >
-                    <div>
-                      <p className="font-bold text-jet">
-                        {r.return_number} — Order {r.order_number} ({r.request_type})
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2.5">
+                        <span className="font-heading font-bold text-base text-jet font-mono">
+                          {r.order_number}
+                        </span>
+                        <span className="bg-jet text-offwhite text-[10px] font-bold uppercase px-2.5 py-0.5">
+                          {r.status === "EXCHANGED" || r.request_type === "EXCHANGE"
+                            ? lang === "ar"
+                              ? "تم الاستبدال"
+                              : "EXCHANGED"
+                            : lang === "ar"
+                            ? "مرتجع"
+                            : "RETURNED"}
+                        </span>
+                        {r.return_number && (
+                          <span className="bg-[#292B2E] text-white text-[10px] font-bold uppercase px-2.5 py-0.5 font-mono">
+                            {r.return_number}
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-xs text-neutralgray">
+                        {r.created_at
+                          ? new Date(r.created_at).toLocaleString(
+                              lang === "ar" ? "ar-EG" : "en-GB"
+                            )
+                          : ""}{" "}
+                        {r.reason ? `| ${r.reason}` : ""}
                       </p>
-                      <p className="text-neutralgray">{r.reason}</p>
+                      {r.total_amount && (
+                        <p className="font-heading font-bold text-sm text-jet pt-1">
+                          {formatCurrency(r.total_amount, lang)}
+                        </p>
+                      )}
                     </div>
-                    <span className="bg-jet text-offwhite px-2.5 py-1 font-bold uppercase">
-                      {r.status}
-                    </span>
+
+                    <div className="flex flex-wrap items-center gap-2">
+                      <Link
+                        href={`/account/orders/${
+                          r.order_id || r.original_order_id || r.order_number
+                        }`}
+                        className="bg-jet hover:bg-[#292B2E] text-offwhite text-xs font-bold uppercase tracking-wider px-4 py-2.5"
+                      >
+                        {lang === "ar" ? "عرض تفاصيل الطلب" : "View Order"}
+                      </Link>
+                    </div>
                   </div>
                 ))}
               </div>
