@@ -912,9 +912,9 @@ export function AdminPortalClient({
       icon: Package,
       defaultSection: "products",
       subsections: [
-        { id: "products", en: "Shoes & Clothing Catalog", ar: "الأحذية والملابس (الكتالوج)" },
-        { id: "collections", en: "Collections", ar: "المجموعات" },
-        { id: "inventory", en: "Stock Control", ar: "مراقبة المخزون" },
+        { id: "products", en: "Catalog", ar: "الأحذية والملابس (الكتالوج)", icon: Package },
+        { id: "collections", en: "Collections", ar: "المجموعات", icon: Layers },
+        { id: "inventory", en: "Stock Control", ar: "مراقبة المخزون", icon: Boxes },
       ],
     },
     {
@@ -924,10 +924,10 @@ export function AdminPortalClient({
       icon: ShoppingCart,
       defaultSection: "orders",
       subsections: [
-        { id: "orders", en: "Orders & Editing", ar: "الطلبات والتعديل" },
-        { id: "invoices", en: "Confirmed Revenue & Invoices", ar: "الإيرادات المؤكدة والفواتير" },
-        { id: "returns", en: "Returns & Exchanges", ar: "المرتجعات والفحص" },
-        { id: "customers", en: "Customer Directory", ar: "سجل العملاء" },
+        { id: "orders", en: "Orders & Editing", ar: "الطلبات والتعديل", icon: ShoppingCart },
+        { id: "invoices", en: "Invoices", ar: "الإيرادات المؤكدة والفواتير", icon: FileText },
+        { id: "returns", en: "Returns & Exchanges", ar: "المرتجعات والفحص", icon: RotateCcw },
+        { id: "customers", en: "Customer Directory", ar: "سجل العملاء", icon: Users },
       ],
     },
     {
@@ -937,8 +937,8 @@ export function AdminPortalClient({
       icon: Truck,
       defaultSection: "shipping",
       subsections: [
-        { id: "shipping", en: "27 Governorates Rates", ar: "أسعار الـ ٢٧ محافظة" },
-        { id: "payments", en: "Payment Verifications", ar: "مراجعة إنستاباي وفودافون" },
+        { id: "shipping", en: "27 Governorates Rates", ar: "أسعار الـ ٢٧ محافظة", icon: Truck },
+        { id: "payments", en: "Payment Verifications", ar: "مراجعة إنستاباي وفودافون", icon: CreditCard },
       ],
     },
     {
@@ -946,13 +946,13 @@ export function AdminPortalClient({
       en: "Storefront & Design",
       ar: "تصميم المتجر",
       icon: Palette,
-      defaultSection: "appearance",
+      defaultSection: "homepage",
       subsections: [
-        { id: "appearance", en: "Theme & Styling", ar: "المظهر والهوية" },
-        { id: "homepage", en: "Homepage Hero & Copy", ar: "بنرات وجمل الرئيسية" },
-        { id: "marquee", en: "Marquee Strip", ar: "الشريط الإعلاني" },
-        { id: "footer", en: "Footer & Newsletter", ar: "الفوتر والنشرة" },
-        { id: "pages", en: "Policy Pages", ar: "السياسات والصفحات" },
+        { id: "homepage", en: "Homepage Hero & Copy", ar: "بنرات وجمل الرئيسية", icon: Sparkles },
+        { id: "appearance", en: "Theme & Styling", ar: "المظهر والهوية", icon: Palette },
+        { id: "marquee", en: "Marquee Strip", ar: "الشريط الإعلاني", icon: Megaphone },
+        { id: "footer", en: "Footer & Newsletter", ar: "الفوتر والنشرة", icon: LayoutDashboard },
+        { id: "pages", en: "Policy Pages", ar: "السياسات والصفحات", icon: FileText },
       ],
     },
     {
@@ -962,16 +962,16 @@ export function AdminPortalClient({
       icon: Settings,
       defaultSection: "settings",
       subsections: [
-        { id: "settings", en: "Store Settings", ar: "إعدادات المتجر" },
-        { id: "whatsapp", en: "WhatsApp Automation", ar: "واتساب التلقائي" },
-        { id: "discounts", en: "Coupons & Discounts", ar: "كوبونات الخصم" },
+        { id: "settings", en: "Store Settings", ar: "إعدادات المتجر", icon: Settings },
+        { id: "whatsapp", en: "WhatsApp Automation", ar: "واتساب التلقائي", icon: MessageSquare },
+        { id: "discounts", en: "Coupons & Discounts", ar: "كوبونات الخصم", icon: Percent },
       ],
     },
   ];
 
   const sidebarItems = adminModules.flatMap((m) =>
     m.subsections.length > 0
-      ? m.subsections.map((s) => ({ id: s.id, group: m.id, en: s.en, ar: s.ar, icon: m.icon }))
+      ? m.subsections.map((s: any) => ({ id: s.id, group: m.id, en: s.en, ar: s.ar, icon: s.icon || m.icon }))
       : [{ id: m.id, group: m.id, en: m.en, ar: m.ar, icon: m.icon }]
   );
 
@@ -1609,20 +1609,22 @@ export function AdminPortalClient({
             {/* Clean Segmented Sub-Navigation Pills (if module has subsections) */}
             {currentModule.subsections.length > 0 && (
               <div className="bg-[#F0F1F3] p-1 rounded-xl flex items-center gap-1 border border-silver/30 self-start md:self-auto w-full md:w-auto overflow-x-auto max-w-full">
-                {currentModule.subsections.map((sub) => {
+                {currentModule.subsections.map((sub: any) => {
                   const isSubActive = activeSection === sub.id;
+                  const SubIcon = sub.icon;
                   return (
                     <button
                       key={sub.id}
                       type="button"
                       onClick={() => setActiveSection(sub.id)}
-                      className={`px-3.5 py-1.5 text-xs font-heading font-bold uppercase tracking-wider rounded-lg transition-all ${
+                      className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-heading font-bold uppercase tracking-wider rounded-lg transition-all cursor-pointer ${
                         isSubActive
-                          ? "bg-white text-[#111214] shadow-xs font-black"
+                          ? "bg-white text-[#111214] shadow-xs font-black border border-silver/40"
                           : "text-[#73777D] hover:text-[#111214] hover:bg-white/60"
                       }`}
                     >
-                      {lang === "ar" ? sub.ar : sub.en}
+                      {SubIcon && <SubIcon className={`w-3.5 h-3.5 ${isSubActive ? "text-jet" : "text-neutralgray"}`} />}
+                      <span>{lang === "ar" ? sub.ar : sub.en}</span>
                     </button>
                   );
                 })}
@@ -1704,22 +1706,6 @@ export function AdminPortalClient({
                       </button>
                     );
                   })}
-                </div>
-
-                <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-white/10">
-                  <p className="text-[11px] text-[#8E9298]">
-                    {lang === "ar"
-                      ? "يمكنك تعديل العناوين والنصوص التسويقية المخصصة لكل وضع من قسم تصميم المتجر."
-                      : "You can customize marketing headlines and CTA buttons for each mode in Storefront Design."}
-                  </p>
-                  <button
-                    type="button"
-                    onClick={() => setActiveSection("homepage")}
-                    className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-bold bg-white/10 hover:bg-white text-white hover:text-black transition-all cursor-pointer border border-white/10 active:scale-95"
-                  >
-                    <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-                    <span>{lang === "ar" ? "تعديل الجمل التسويقية في تصميم المتجر ↗" : "Edit Marketing Copy in Storefront Design ↗"}</span>
-                  </button>
                 </div>
               </div>
 
@@ -6770,44 +6756,89 @@ export function AdminPortalClient({
 
               {/* Dynamic Hero Marketing Copy Customizer (Shoes / Clothing / Both) */}
               <div className="bg-white border border-silver/60 rounded-3xl p-6 sm:p-7 shadow-sm space-y-6">
-                {/* Mode Selector Tabs */}
-                <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <label className="text-xs font-bold text-neutralgray uppercase tracking-wider">
-                      {lang === "ar" ? "اختر وضع المتجر لتعديل عباراته التسويقية:" : "Select Store Mode to Customize:"}
-                    </label>
-                    <span className="text-[11px] font-mono px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 font-bold border border-emerald-200 flex items-center gap-1.5">
-                      <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                      <span>{lang === "ar" ? "الوضع النشط حالياً بالمتجر: " : "Active Storefront Mode: "}</span>
-                      <strong>
+                {/* Mode Selector Tabs Header */}
+                <div className="space-y-3">
+                  <div className="flex flex-wrap items-center justify-between gap-3 border-b border-silver/30 pb-3">
+                    <div>
+                      <h3 className="font-heading font-bold text-sm text-jet uppercase tracking-wider flex items-center gap-2">
+                        <Sparkles className="w-4 h-4 text-amber-500" />
+                        <span>{lang === "ar" ? "اختر وضع المتجر لتعديل عباراته التسويقية" : "Select Storefront Mode to Customize"}</span>
+                      </h3>
+                      <p className="text-[11px] text-neutralgray mt-0.5">
+                        {lang === "ar"
+                          ? "قم بتحديد الوضع لتعديل العنوان، والوصف، وزر الشراء المخصص له."
+                          : "Select a mode below to customize its dedicated headline, subtitle, and CTA button."}
+                      </p>
+                    </div>
+
+                    <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#111214] text-white text-[11px] font-mono shadow-xs border border-white/10">
+                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                      <span className="text-[#8E9298]">{lang === "ar" ? "الوضع النشط بالمتجر: " : "Live Storefront Mode: "}</span>
+                      <strong className="text-emerald-300 font-bold">
                         {cmsData?.settings?.store_category_visibility === "SHOES_ONLY"
                           ? (lang === "ar" ? "الأحذية فقط" : "Shoes Only")
                           : cmsData?.settings?.store_category_visibility === "CLOTHING_ONLY"
                           ? (lang === "ar" ? "الملابس فقط" : "Clothing Only")
                           : (lang === "ar" ? "الاثنين معاً" : "Both")}
                       </strong>
-                    </span>
+                    </div>
                   </div>
 
-                  <div className="flex flex-wrap items-center gap-2.5">
+                  {/* Mode Buttons with Pure SVG Icons (No Emojis) */}
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
                     {[
-                      { id: "BOTH" as const, labelAr: "⚡ وضع الاثنين معاً (الأحذية والملابس)", labelEn: "⚡ Both (Shoes & Clothing)" },
-                      { id: "SHOES_ONLY" as const, labelAr: "👟 وضع الأحذية فقط", labelEn: "👟 Shoes Only" },
-                      { id: "CLOTHING_ONLY" as const, labelAr: "👕 وضع الملابس فقط", labelEn: "👕 Clothing Only" },
+                      {
+                        id: "BOTH" as const,
+                        labelAr: "وضع الاثنين معاً (أحذية وملابس)",
+                        labelEn: "Both (Footwear & Apparel)",
+                        icon: Layers,
+                        accentColor: "text-emerald-400",
+                        badge: "DUAL",
+                      },
+                      {
+                        id: "SHOES_ONLY" as const,
+                        labelAr: "وضع الأحذية فقط",
+                        labelEn: "Shoes Only",
+                        icon: Footprints,
+                        accentColor: "text-sky-400",
+                        badge: "FOOTWEAR",
+                      },
+                      {
+                        id: "CLOTHING_ONLY" as const,
+                        labelAr: "وضع الملابس فقط",
+                        labelEn: "Clothing Only",
+                        icon: Shirt,
+                        accentColor: "text-purple-400",
+                        badge: "APPAREL",
+                      },
                     ].map((tb) => {
                       const active = heroCopyActiveTab === tb.id;
+                      const TabIcon = tb.icon;
                       return (
                         <button
                           key={tb.id}
                           type="button"
                           onClick={() => setHeroCopyActiveTab(tb.id)}
-                          className={`px-5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer border ${
+                          className={`flex items-center justify-between p-3.5 rounded-2xl text-xs font-heading font-bold uppercase tracking-wider transition-all cursor-pointer border text-start ${
                             active
-                              ? "bg-jet text-white border-jet shadow-md ring-2 ring-jet"
-                              : "bg-[#FAFAFA] text-neutralgray border-silver/60 hover:bg-white hover:text-jet"
+                              ? "bg-jet text-white border-jet shadow-lg ring-2 ring-jet scale-[1.01]"
+                              : "bg-[#FAFAFA] text-neutralgray border-silver/60 hover:bg-white hover:text-jet hover:border-silver"
                           }`}
                         >
-                          {lang === "ar" ? tb.labelAr : tb.labelEn}
+                          <div className="flex items-center gap-2.5">
+                            <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 ${active ? "bg-white/10 text-white" : "bg-white text-jet border border-silver/50"}`}>
+                              <TabIcon className="w-4 h-4" />
+                            </div>
+                            <div>
+                              <div className={`font-bold text-xs ${active ? "text-white" : "text-jet"}`}>
+                                {lang === "ar" ? tb.labelAr : tb.labelEn}
+                              </div>
+                              <div className="text-[10px] font-mono opacity-70">
+                                {tb.badge}
+                              </div>
+                            </div>
+                          </div>
+                          {active && <Check className="w-4 h-4 text-emerald-400 shrink-0" />}
                         </button>
                       );
                     })}
@@ -6815,274 +6846,365 @@ export function AdminPortalClient({
                 </div>
 
                 {/* Live Preview Box */}
-                <div className="p-5 sm:p-6 rounded-2xl bg-[#111214] text-white border border-white/10 shadow-lg">
-                  <div className="flex items-center justify-between mb-3 border-b border-white/10 pb-2.5">
-                    <span className="text-[11px] font-mono font-bold uppercase tracking-widest text-[#BFC2C6] flex items-center gap-1.5">
+                <div className="p-6 sm:p-7 rounded-2xl bg-[#0F1012] text-white border border-white/10 shadow-xl relative overflow-hidden">
+                  <div className="flex flex-wrap items-center justify-between gap-2 mb-4 border-b border-white/10 pb-3">
+                    <span className="text-[11px] font-mono font-bold uppercase tracking-widest text-[#BFC2C6] flex items-center gap-2">
                       <Eye className="w-4 h-4 text-emerald-400" />
                       <span>{lang === "ar" ? "معاينة حية ومباشرة كما تظهر للزائر في بنر الهيرو:" : "Live Storefront Hero Banner Preview:"}</span>
                     </span>
-                    <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-md bg-white/10 text-emerald-300 font-bold">
+                    <span className="text-[10px] font-mono px-3 py-1 rounded-full bg-white/10 text-emerald-300 font-bold border border-white/10">
                       MODE: {heroCopyActiveTab}
                     </span>
                   </div>
-                  <div className="space-y-2.5 py-2">
-                    <h4 className="font-heading text-xl sm:text-3xl font-extrabold text-white tracking-tight">
+
+                  <div className={`space-y-3 py-2 ${lang === "ar" ? "text-right" : "text-left"}`}>
+                    <h4 className="font-heading text-xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight uppercase">
                       {lang === "ar"
                         ? (heroCopyActiveTab === "BOTH" ? heroBothHeadlineAr : heroCopyActiveTab === "SHOES_ONLY" ? heroShoesHeadlineAr : heroClothingHeadlineAr)
                         : (heroCopyActiveTab === "BOTH" ? heroBothHeadlineEn : heroCopyActiveTab === "SHOES_ONLY" ? heroShoesHeadlineEn : heroClothingHeadlineEn)}
                     </h4>
-                    <p className="text-xs sm:text-sm text-[#BFC2C6] leading-relaxed max-w-2xl">
+                    <p className="text-xs sm:text-sm text-[#A0A5AC] leading-relaxed max-w-2xl font-sans">
                       {lang === "ar"
                         ? (heroCopyActiveTab === "BOTH" ? heroBothSubtitleAr : heroCopyActiveTab === "SHOES_ONLY" ? heroShoesSubtitleAr : heroClothingSubtitleAr)
                         : (heroCopyActiveTab === "BOTH" ? heroBothSubtitleEn : heroCopyActiveTab === "SHOES_ONLY" ? heroShoesSubtitleEn : heroClothingSubtitleEn)}
                     </p>
                     <div className="pt-3">
-                      <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white text-[#111214] font-heading text-xs font-bold uppercase tracking-wider shadow-md">
+                      <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white text-[#111214] font-heading text-xs font-extrabold uppercase tracking-wider shadow-lg">
                         <span>
                           {lang === "ar"
                             ? (heroCopyActiveTab === "BOTH" ? heroBothBtnTextAr : heroCopyActiveTab === "SHOES_ONLY" ? heroShoesBtnTextAr : heroClothingBtnTextAr)
                             : (heroCopyActiveTab === "BOTH" ? heroBothBtnTextEn : heroCopyActiveTab === "SHOES_ONLY" ? heroShoesBtnTextEn : heroClothingBtnTextEn)}
                         </span>
-                        <ArrowRight className="w-3.5 h-3.5" />
+                        {lang === "ar" ? <ArrowLeft className="w-3.5 h-3.5" /> : <ArrowRight className="w-3.5 h-3.5" />}
                       </span>
                     </div>
                   </div>
                 </div>
 
-                {/* Inputs Form based on active Tab */}
+                {/* Inputs Form based on active Tab with strict LTR/RTL and Language Badges */}
                 {heroCopyActiveTab === "BOTH" && (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-1.5">
-                      <label className="text-xs font-bold text-jet block">
-                        {lang === "ar" ? "العنوان الرئيسي (عربي) - وضع الاثنين" : "Main Headline (AR) - Both Mode"}
-                      </label>
-                      <input
-                        type="text"
-                        value={heroBothHeadlineAr}
-                        onChange={(e) => setHeroBothHeadlineAr(e.target.value)}
-                        placeholder="اخطُ في مسارك الخاص."
-                        className="w-full text-xs p-3 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none font-bold"
-                      />
-                    </div>
-                    <div className="space-y-1.5">
-                      <label className="text-xs font-bold text-jet block">
-                        {lang === "ar" ? "العنوان الرئيسي (English) - وضع الاثنين" : "Main Headline (EN) - Both Mode"}
-                      </label>
-                      <input
-                        type="text"
-                        value={heroBothHeadlineEn}
-                        onChange={(e) => setHeroBothHeadlineEn(e.target.value)}
-                        placeholder="STEP INTO YOUR OWN LANE."
-                        className="w-full text-xs p-3 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none font-bold"
-                      />
-                    </div>
-
-                    <div className="space-y-1.5 md:col-span-2">
-                      <label className="text-xs font-bold text-jet block">
-                        {lang === "ar" ? "الوصف التسويقي (عربي) - وضع الاثنين" : "Marketing Subtitle (AR) - Both Mode"}
-                      </label>
-                      <textarea
-                        rows={2}
-                        value={heroBothSubtitleAr}
-                        onChange={(e) => setHeroBothSubtitleAr(e.target.value)}
-                        placeholder="أحذية فاخرة وملابس ستريت وير عصرية تعبّر عن هويتك المتفردة وأسلوبك الاستثنائي."
-                        className="w-full text-xs p-3 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none"
-                      />
-                    </div>
-                    <div className="space-y-1.5 md:col-span-2">
-                      <label className="text-xs font-bold text-jet block">
-                        {lang === "ar" ? "الوصف التسويقي (English) - وضع الاثنين" : "Marketing Subtitle (EN) - Both Mode"}
-                      </label>
-                      <textarea
-                        rows={2}
-                        value={heroBothSubtitleEn}
-                        onChange={(e) => setHeroBothSubtitleEn(e.target.value)}
-                        placeholder="Premium footwear & modern luxury streetwear crafted for distinct individuality."
-                        className="w-full text-xs p-3 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none"
-                      />
+                  <div className="space-y-4 pt-1">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-1.5">
+                        <div className="flex items-center justify-between">
+                          <label className="text-xs font-bold text-jet block">
+                            {lang === "ar" ? "العنوان الرئيسي (عربي)" : "Main Headline (Arabic)"}
+                          </label>
+                          <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-jet text-white font-bold">AR</span>
+                        </div>
+                        <input
+                          type="text"
+                          dir="rtl"
+                          value={heroBothHeadlineAr}
+                          onChange={(e) => setHeroBothHeadlineAr(e.target.value)}
+                          placeholder="اخطُ في مسارك الخاص."
+                          className="w-full text-xs p-3.5 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none font-bold text-right"
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        <div className="flex items-center justify-between">
+                          <label className="text-xs font-bold text-jet block">
+                            {lang === "ar" ? "العنوان الرئيسي (English)" : "Main Headline (English)"}
+                          </label>
+                          <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-neutral-200 text-neutral-800 font-bold">EN</span>
+                        </div>
+                        <input
+                          type="text"
+                          dir="ltr"
+                          value={heroBothHeadlineEn}
+                          onChange={(e) => setHeroBothHeadlineEn(e.target.value)}
+                          placeholder="STEP INTO YOUR OWN LANE."
+                          className="w-full text-xs p-3.5 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none font-bold text-left font-mono"
+                        />
+                      </div>
                     </div>
 
-                    <div className="space-y-1.5">
-                      <label className="text-xs font-bold text-jet block">
-                        {lang === "ar" ? "نص زرار التسوق (عربي)" : "Button Text (AR)"}
-                      </label>
-                      <input
-                        type="text"
-                        value={heroBothBtnTextAr}
-                        onChange={(e) => setHeroBothBtnTextAr(e.target.value)}
-                        placeholder="تسوق المجموعة"
-                        className="w-full text-xs p-3 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none font-bold"
-                      />
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-1.5">
+                        <div className="flex items-center justify-between">
+                          <label className="text-xs font-bold text-jet block">
+                            {lang === "ar" ? "الوصف التسويقي (عربي)" : "Marketing Subtitle (Arabic)"}
+                          </label>
+                          <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-jet text-white font-bold">AR</span>
+                        </div>
+                        <textarea
+                          rows={2}
+                          dir="rtl"
+                          value={heroBothSubtitleAr}
+                          onChange={(e) => setHeroBothSubtitleAr(e.target.value)}
+                          placeholder="أحذية فاخرة وملابس ستريت وير عصرية تعبّر عن هويتك المتفردة وأسلوبك الاستثنائي."
+                          className="w-full text-xs p-3.5 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none text-right leading-relaxed"
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        <div className="flex items-center justify-between">
+                          <label className="text-xs font-bold text-jet block">
+                            {lang === "ar" ? "الوصف التسويقي (English)" : "Marketing Subtitle (English)"}
+                          </label>
+                          <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-neutral-200 text-neutral-800 font-bold">EN</span>
+                        </div>
+                        <textarea
+                          rows={2}
+                          dir="ltr"
+                          value={heroBothSubtitleEn}
+                          onChange={(e) => setHeroBothSubtitleEn(e.target.value)}
+                          placeholder="Premium footwear & modern luxury streetwear crafted for distinct individuality."
+                          className="w-full text-xs p-3.5 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none text-left font-mono leading-relaxed"
+                        />
+                      </div>
                     </div>
-                    <div className="space-y-1.5">
-                      <label className="text-xs font-bold text-jet block">
-                        {lang === "ar" ? "نص زرار التسوق (English)" : "Button Text (EN)"}
-                      </label>
-                      <input
-                        type="text"
-                        value={heroBothBtnTextEn}
-                        onChange={(e) => setHeroBothBtnTextEn(e.target.value)}
-                        placeholder="SHOP COLLECTION"
-                        className="w-full text-xs p-3 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none font-bold"
-                      />
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-1.5">
+                        <div className="flex items-center justify-between">
+                          <label className="text-xs font-bold text-jet block">
+                            {lang === "ar" ? "نص زرار الشراء (عربي)" : "CTA Button Text (Arabic)"}
+                          </label>
+                          <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-jet text-white font-bold">AR</span>
+                        </div>
+                        <input
+                          type="text"
+                          dir="rtl"
+                          value={heroBothBtnTextAr}
+                          onChange={(e) => setHeroBothBtnTextAr(e.target.value)}
+                          placeholder="تسوق المجموعة"
+                          className="w-full text-xs p-3.5 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none font-bold text-right"
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        <div className="flex items-center justify-between">
+                          <label className="text-xs font-bold text-jet block">
+                            {lang === "ar" ? "نص زرار الشراء (English)" : "CTA Button Text (English)"}
+                          </label>
+                          <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-neutral-200 text-neutral-800 font-bold">EN</span>
+                        </div>
+                        <input
+                          type="text"
+                          dir="ltr"
+                          value={heroBothBtnTextEn}
+                          onChange={(e) => setHeroBothBtnTextEn(e.target.value)}
+                          placeholder="SHOP COLLECTION"
+                          className="w-full text-xs p-3.5 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none font-bold text-left font-mono"
+                        />
+                      </div>
                     </div>
                   </div>
                 )}
 
                 {heroCopyActiveTab === "SHOES_ONLY" && (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-1.5">
-                      <label className="text-xs font-bold text-jet block">
-                        {lang === "ar" ? "العنوان الرئيسي (عربي) - وضع الأحذية فقط" : "Main Headline (AR) - Shoes Mode"}
-                      </label>
-                      <input
-                        type="text"
-                        value={heroShoesHeadlineAr}
-                        onChange={(e) => setHeroShoesHeadlineAr(e.target.value)}
-                        placeholder="فخامة في كل خطوة."
-                        className="w-full text-xs p-3 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none font-bold"
-                      />
-                    </div>
-                    <div className="space-y-1.5">
-                      <label className="text-xs font-bold text-jet block">
-                        {lang === "ar" ? "العنوان الرئيسي (English) - وضع الأحذية فقط" : "Main Headline (EN) - Shoes Mode"}
-                      </label>
-                      <input
-                        type="text"
-                        value={heroShoesHeadlineEn}
-                        onChange={(e) => setHeroShoesHeadlineEn(e.target.value)}
-                        placeholder="STEP INTO LUXURY."
-                        className="w-full text-xs p-3 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none font-bold"
-                      />
-                    </div>
-
-                    <div className="space-y-1.5 md:col-span-2">
-                      <label className="text-xs font-bold text-jet block">
-                        {lang === "ar" ? "الوصف التسويقي (عربي) - وضع الأحذية فقط" : "Marketing Subtitle (AR) - Shoes Mode"}
-                      </label>
-                      <textarea
-                        rows={2}
-                        value={heroShoesSubtitleAr}
-                        onChange={(e) => setHeroShoesSubtitleAr(e.target.value)}
-                        placeholder="سنيكرز وأحذية حصرية بتصاميم استثنائية وأداء يجمع بين الأناقة والراحة المطلقة."
-                        className="w-full text-xs p-3 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none"
-                      />
-                    </div>
-                    <div className="space-y-1.5 md:col-span-2">
-                      <label className="text-xs font-bold text-jet block">
-                        {lang === "ar" ? "الوصف التسويقي (English) - وضع الأحذية فقط" : "Marketing Subtitle (EN) - Shoes Mode"}
-                      </label>
-                      <textarea
-                        rows={2}
-                        value={heroShoesSubtitleEn}
-                        onChange={(e) => setHeroShoesSubtitleEn(e.target.value)}
-                        placeholder="Exclusive sneakers & premium footwear engineered for bold presence and supreme comfort."
-                        className="w-full text-xs p-3 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none"
-                      />
+                  <div className="space-y-4 pt-1">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-1.5">
+                        <div className="flex items-center justify-between">
+                          <label className="text-xs font-bold text-jet block">
+                            {lang === "ar" ? "العنوان الرئيسي (عربي) - الأحذية فقط" : "Main Headline (Arabic) - Shoes Only"}
+                          </label>
+                          <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-jet text-white font-bold">AR</span>
+                        </div>
+                        <input
+                          type="text"
+                          dir="rtl"
+                          value={heroShoesHeadlineAr}
+                          onChange={(e) => setHeroShoesHeadlineAr(e.target.value)}
+                          placeholder="فخامة في كل خطوة."
+                          className="w-full text-xs p-3.5 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none font-bold text-right"
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        <div className="flex items-center justify-between">
+                          <label className="text-xs font-bold text-jet block">
+                            {lang === "ar" ? "العنوان الرئيسي (English) - الأحذية فقط" : "Main Headline (English) - Shoes Only"}
+                          </label>
+                          <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-neutral-200 text-neutral-800 font-bold">EN</span>
+                        </div>
+                        <input
+                          type="text"
+                          dir="ltr"
+                          value={heroShoesHeadlineEn}
+                          onChange={(e) => setHeroShoesHeadlineEn(e.target.value)}
+                          placeholder="STEP INTO LUXURY."
+                          className="w-full text-xs p-3.5 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none font-bold text-left font-mono"
+                        />
+                      </div>
                     </div>
 
-                    <div className="space-y-1.5">
-                      <label className="text-xs font-bold text-jet block">
-                        {lang === "ar" ? "نص زرار التسوق (عربي)" : "Button Text (AR)"}
-                      </label>
-                      <input
-                        type="text"
-                        value={heroShoesBtnTextAr}
-                        onChange={(e) => setHeroShoesBtnTextAr(e.target.value)}
-                        placeholder="تسوق الأحذية"
-                        className="w-full text-xs p-3 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none font-bold"
-                      />
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-1.5">
+                        <div className="flex items-center justify-between">
+                          <label className="text-xs font-bold text-jet block">
+                            {lang === "ar" ? "الوصف التسويقي (عربي) - الأحذية فقط" : "Marketing Subtitle (Arabic) - Shoes Only"}
+                          </label>
+                          <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-jet text-white font-bold">AR</span>
+                        </div>
+                        <textarea
+                          rows={2}
+                          dir="rtl"
+                          value={heroShoesSubtitleAr}
+                          onChange={(e) => setHeroShoesSubtitleAr(e.target.value)}
+                          placeholder="سنيكرز وأحذية حصرية بتصاميم استثنائية وأداء يجمع بين الأناقة والراحة المطلقة."
+                          className="w-full text-xs p-3.5 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none text-right leading-relaxed"
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        <div className="flex items-center justify-between">
+                          <label className="text-xs font-bold text-jet block">
+                            {lang === "ar" ? "الوصف التسويقي (English) - الأحذية فقط" : "Marketing Subtitle (English) - Shoes Only"}
+                          </label>
+                          <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-neutral-200 text-neutral-800 font-bold">EN</span>
+                        </div>
+                        <textarea
+                          rows={2}
+                          dir="ltr"
+                          value={heroShoesSubtitleEn}
+                          onChange={(e) => setHeroShoesSubtitleEn(e.target.value)}
+                          placeholder="Exclusive sneakers & premium footwear engineered for bold presence and supreme comfort."
+                          className="w-full text-xs p-3.5 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none text-left font-mono leading-relaxed"
+                        />
+                      </div>
                     </div>
-                    <div className="space-y-1.5">
-                      <label className="text-xs font-bold text-jet block">
-                        {lang === "ar" ? "نص زرار التسوق (English)" : "Button Text (EN)"}
-                      </label>
-                      <input
-                        type="text"
-                        value={heroShoesBtnTextEn}
-                        onChange={(e) => setHeroShoesBtnTextEn(e.target.value)}
-                        placeholder="SHOP FOOTWEAR"
-                        className="w-full text-xs p-3 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none font-bold"
-                      />
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-1.5">
+                        <div className="flex items-center justify-between">
+                          <label className="text-xs font-bold text-jet block">
+                            {lang === "ar" ? "نص زرار الشراء (عربي)" : "CTA Button Text (Arabic)"}
+                          </label>
+                          <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-jet text-white font-bold">AR</span>
+                        </div>
+                        <input
+                          type="text"
+                          dir="rtl"
+                          value={heroShoesBtnTextAr}
+                          onChange={(e) => setHeroShoesBtnTextAr(e.target.value)}
+                          placeholder="تسوق الأحذية"
+                          className="w-full text-xs p-3.5 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none font-bold text-right"
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        <div className="flex items-center justify-between">
+                          <label className="text-xs font-bold text-jet block">
+                            {lang === "ar" ? "نص زرار الشراء (English)" : "CTA Button Text (English)"}
+                          </label>
+                          <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-neutral-200 text-neutral-800 font-bold">EN</span>
+                        </div>
+                        <input
+                          type="text"
+                          dir="ltr"
+                          value={heroShoesBtnTextEn}
+                          onChange={(e) => setHeroShoesBtnTextEn(e.target.value)}
+                          placeholder="SHOP FOOTWEAR"
+                          className="w-full text-xs p-3.5 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none font-bold text-left font-mono"
+                        />
+                      </div>
                     </div>
                   </div>
                 )}
 
                 {heroCopyActiveTab === "CLOTHING_ONLY" && (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-1.5">
-                      <label className="text-xs font-bold text-jet block">
-                        {lang === "ar" ? "العنوان الرئيسي (عربي) - وضع الملابس فقط" : "Main Headline (AR) - Clothing Mode"}
-                      </label>
-                      <input
-                        type="text"
-                        value={heroClothingHeadlineAr}
-                        onChange={(e) => setHeroClothingHeadlineAr(e.target.value)}
-                        placeholder="أناقة تعبّر عن حضورك."
-                        className="w-full text-xs p-3 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none font-bold"
-                      />
-                    </div>
-                    <div className="space-y-1.5">
-                      <label className="text-xs font-bold text-jet block">
-                        {lang === "ar" ? "العنوان الرئيسي (English) - وضع الملابس فقط" : "Main Headline (EN) - Clothing Mode"}
-                      </label>
-                      <input
-                        type="text"
-                        value={heroClothingHeadlineEn}
-                        onChange={(e) => setHeroClothingHeadlineEn(e.target.value)}
-                        placeholder="WEAR YOUR IDENTITY."
-                        className="w-full text-xs p-3 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none font-bold"
-                      />
-                    </div>
-
-                    <div className="space-y-1.5 md:col-span-2">
-                      <label className="text-xs font-bold text-jet block">
-                        {lang === "ar" ? "الوصف التسويقي (عربي) - وضع الملابس فقط" : "Marketing Subtitle (AR) - Clothing Mode"}
-                      </label>
-                      <textarea
-                        rows={2}
-                        value={heroClothingSubtitleAr}
-                        onChange={(e) => setHeroClothingSubtitleAr(e.target.value)}
-                        placeholder="ملابس ستريت وير عصرية وتصاميم فاخرة صُممت لتبرز تفرد أسلوبك في كل إطلالة."
-                        className="w-full text-xs p-3 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none"
-                      />
-                    </div>
-                    <div className="space-y-1.5 md:col-span-2">
-                      <label className="text-xs font-bold text-jet block">
-                        {lang === "ar" ? "الوصف التسويقي (English) - وضع الملابس فقط" : "Marketing Subtitle (EN) - Clothing Mode"}
-                      </label>
-                      <textarea
-                        rows={2}
-                        value={heroClothingSubtitleEn}
-                        onChange={(e) => setHeroClothingSubtitleEn(e.target.value)}
-                        placeholder="Modern luxury streetwear & premium apparel designed for distinctive street presence."
-                        className="w-full text-xs p-3 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none"
-                      />
+                  <div className="space-y-4 pt-1">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-1.5">
+                        <div className="flex items-center justify-between">
+                          <label className="text-xs font-bold text-jet block">
+                            {lang === "ar" ? "العنوان الرئيسي (عربي) - الملابس فقط" : "Main Headline (Arabic) - Clothing Only"}
+                          </label>
+                          <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-jet text-white font-bold">AR</span>
+                        </div>
+                        <input
+                          type="text"
+                          dir="rtl"
+                          value={heroClothingHeadlineAr}
+                          onChange={(e) => setHeroClothingHeadlineAr(e.target.value)}
+                          placeholder="أناقة تعبّر عن حضورك."
+                          className="w-full text-xs p-3.5 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none font-bold text-right"
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        <div className="flex items-center justify-between">
+                          <label className="text-xs font-bold text-jet block">
+                            {lang === "ar" ? "العنوان الرئيسي (English) - الملابس فقط" : "Main Headline (English) - Clothing Only"}
+                          </label>
+                          <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-neutral-200 text-neutral-800 font-bold">EN</span>
+                        </div>
+                        <input
+                          type="text"
+                          dir="ltr"
+                          value={heroClothingHeadlineEn}
+                          onChange={(e) => setHeroClothingHeadlineEn(e.target.value)}
+                          placeholder="WEAR YOUR IDENTITY."
+                          className="w-full text-xs p-3.5 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none font-bold text-left font-mono"
+                        />
+                      </div>
                     </div>
 
-                    <div className="space-y-1.5">
-                      <label className="text-xs font-bold text-jet block">
-                        {lang === "ar" ? "نص زرار التسوق (عربي)" : "Button Text (AR)"}
-                      </label>
-                      <input
-                        type="text"
-                        value={heroClothingBtnTextAr}
-                        onChange={(e) => setHeroClothingBtnTextAr(e.target.value)}
-                        placeholder="تسوق الملابس"
-                        className="w-full text-xs p-3 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none font-bold"
-                      />
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-1.5">
+                        <div className="flex items-center justify-between">
+                          <label className="text-xs font-bold text-jet block">
+                            {lang === "ar" ? "الوصف التسويقي (عربي) - الملابس فقط" : "Marketing Subtitle (Arabic) - Clothing Only"}
+                          </label>
+                          <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-jet text-white font-bold">AR</span>
+                        </div>
+                        <textarea
+                          rows={2}
+                          dir="rtl"
+                          value={heroClothingSubtitleAr}
+                          onChange={(e) => setHeroClothingSubtitleAr(e.target.value)}
+                          placeholder="ملابس ستريت وير عصرية وتصاميم فاخرة صُممت لتبرز تفرد أسلوبك في كل إطلالة."
+                          className="w-full text-xs p-3.5 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none text-right leading-relaxed"
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        <div className="flex items-center justify-between">
+                          <label className="text-xs font-bold text-jet block">
+                            {lang === "ar" ? "الوصف التسويقي (English) - الملابس فقط" : "Marketing Subtitle (English) - Clothing Only"}
+                          </label>
+                          <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-neutral-200 text-neutral-800 font-bold">EN</span>
+                        </div>
+                        <textarea
+                          rows={2}
+                          dir="ltr"
+                          value={heroClothingSubtitleEn}
+                          onChange={(e) => setHeroClothingSubtitleEn(e.target.value)}
+                          placeholder="Modern luxury streetwear & premium apparel designed for distinctive street presence."
+                          className="w-full text-xs p-3.5 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none text-left font-mono leading-relaxed"
+                        />
+                      </div>
                     </div>
-                    <div className="space-y-1.5">
-                      <label className="text-xs font-bold text-jet block">
-                        {lang === "ar" ? "نص زرار التسوق (English)" : "Button Text (EN)"}
-                      </label>
-                      <input
-                        type="text"
-                        value={heroClothingBtnTextEn}
-                        onChange={(e) => setHeroClothingBtnTextEn(e.target.value)}
-                        placeholder="SHOP CLOTHING"
-                        className="w-full text-xs p-3 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none font-bold"
-                      />
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-1.5">
+                        <div className="flex items-center justify-between">
+                          <label className="text-xs font-bold text-jet block">
+                            {lang === "ar" ? "نص زرار الشراء (عربي)" : "CTA Button Text (Arabic)"}
+                          </label>
+                          <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-jet text-white font-bold">AR</span>
+                        </div>
+                        <input
+                          type="text"
+                          dir="rtl"
+                          value={heroClothingBtnTextAr}
+                          onChange={(e) => setHeroClothingBtnTextAr(e.target.value)}
+                          placeholder="تسوق الملابس"
+                          className="w-full text-xs p-3.5 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none font-bold text-right"
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        <div className="flex items-center justify-between">
+                          <label className="text-xs font-bold text-jet block">
+                            {lang === "ar" ? "نص زرار الشراء (English)" : "CTA Button Text (English)"}
+                          </label>
+                          <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-neutral-200 text-neutral-800 font-bold">EN</span>
+                        </div>
+                        <input
+                          type="text"
+                          dir="ltr"
+                          value={heroClothingBtnTextEn}
+                          onChange={(e) => setHeroClothingBtnTextEn(e.target.value)}
+                          placeholder="SHOP CLOTHING"
+                          className="w-full text-xs p-3.5 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none font-bold text-left font-mono"
+                        />
+                      </div>
                     </div>
                   </div>
                 )}
@@ -7116,9 +7238,10 @@ export function AdminPortalClient({
                       }
                       showNotification(lang === "ar" ? "تمت استعادة العبارات الافتراضية للوضع الحالي" : "Defaults restored for current mode", "info");
                     }}
-                    className="text-xs text-neutralgray hover:text-jet underline font-bold cursor-pointer"
+                    className="inline-flex items-center gap-1.5 text-xs text-neutralgray hover:text-jet underline font-bold cursor-pointer"
                   >
-                    {lang === "ar" ? "استعادة النصوص الافتراضية لهذا الوضع" : "Restore Defaults for this Mode"}
+                    <RotateCcw className="w-3.5 h-3.5" />
+                    <span>{lang === "ar" ? "استعادة النصوص الافتراضية لهذا الوضع" : "Restore Defaults for this Mode"}</span>
                   </button>
 
                   <button
