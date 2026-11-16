@@ -2,7 +2,7 @@
 
 import React, { useRef, useEffect, useState, useCallback } from "react";
 import Link from "next/link";
-import { ChevronLeft, ChevronRight, Layers, ArrowRight, ArrowLeft } from "lucide-react";
+import { ChevronLeft, ChevronRight, Layers, ArrowRight } from "lucide-react";
 import { Language } from "@/lib/i18n/dictionaries";
 import { ProductCard, ProductSummary } from "./ProductCard";
 
@@ -40,8 +40,6 @@ export function CollectionSlider({
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const isRtl = lang === "ar";
-  const currentIndexRef = useRef(0);
-  currentIndexRef.current = currentIndex;
 
   const name = isRtl
     ? collection.name_ar || collection.name_en
@@ -55,95 +53,91 @@ export function CollectionSlider({
 
   const displayProducts = products;
 
-  // Smoothly scroll to target card using native element alignment (100% RTL & LTR compatible)
-  const scrollToIndex = useCallback(
-    (targetIndex: number) => {
-      const container = scrollRef.current;
-      if (!container || displayProducts.length === 0) return;
-
-      const boundedIndex = (targetIndex + displayProducts.length) % displayProducts.length;
-      setCurrentIndex(boundedIndex);
-
-      const targetCard = container.children[boundedIndex] as HTMLElement;
-      if (targetCard) {
-        targetCard.scrollIntoView({
-          behavior: "smooth",
-          block: "nearest",
-          inline: "start",
-        });
-      }
-    },
-    [displayProducts.length]
-  );
-
+  // Purely horizontal navigation: moves ONLY the products inside the container with ZERO vertical page movement
   const handleNext = useCallback(() => {
-    scrollToIndex(currentIndexRef.current + 1);
-  }, [scrollToIndex]);
+    const container = scrollRef.current;
+    if (!container || displayProducts.length <= 1) return;
+
+    const firstCard = container.firstElementChild as HTMLElement | null;
+    const cardStep = firstCard ? firstCard.offsetWidth + 20 : 250;
+    const maxScroll = container.scrollWidth - container.clientWidth;
+    const currentScroll = Math.abs(container.scrollLeft);
+
+    if (currentScroll >= maxScroll - 15) {
+      container.scrollTo({ left: 0, top: 0, behavior: "smooth" });
+    } else {
+      const delta = isRtl ? -cardStep : cardStep;
+      container.scrollBy({ left: delta, top: 0, behavior: "smooth" });
+    }
+  }, [displayProducts.length, isRtl]);
 
   const handlePrev = useCallback(() => {
-    scrollToIndex(currentIndexRef.current - 1);
-  }, [scrollToIndex]);
+    const container = scrollRef.current;
+    if (!container || displayProducts.length <= 1) return;
 
-  // Automatic smooth rotation loop every 3.5 seconds (Pauses gently on hover or touch)
+    const firstCard = container.firstElementChild as HTMLElement | null;
+    const cardStep = firstCard ? firstCard.offsetWidth + 20 : 250;
+    const maxScroll = container.scrollWidth - container.clientWidth;
+    const currentScroll = Math.abs(container.scrollLeft);
+
+    if (currentScroll <= 15) {
+      container.scrollTo({ left: isRtl ? -maxScroll : maxScroll, top: 0, behavior: "smooth" });
+    } else {
+      const delta = isRtl ? cardStep : -cardStep;
+      container.scrollBy({ left: delta, top: 0, behavior: "smooth" });
+    }
+  }, [displayProducts.length, isRtl]);
+
+  // Smooth automatic horizontal rotation: advances only products sideways, pauses on hover/touch
   useEffect(() => {
     if (displayProducts.length <= 1 || isHovered) return;
 
-    const interval = setInterval(() => {
-      const nextIndex = (currentIndexRef.current + 1) % displayProducts.length;
-      const container = scrollRef.current;
-      if (container && container.children && container.children[nextIndex]) {
-        (container.children[nextIndex] as HTMLElement).scrollIntoView({
-          behavior: "smooth",
-          block: "nearest",
-          inline: "start",
-        });
-      }
-      setCurrentIndex(nextIndex);
-    }, 3500);
+    const timer = setInterval(() => {
+      handleNext();
+    }, 3400);
 
-    return () => clearInterval(interval);
-  }, [displayProducts.length, isHovered]);
+    return () => clearInterval(timer);
+  }, [displayProducts.length, isHovered, handleNext]);
 
-  // Track active slide accurately when user drags/swipes manually
+  // Update dots indicator strictly from horizontal scroll position
   const handleScroll = useCallback(() => {
     const container = scrollRef.current;
-    if (!container || container.children.length === 0) return;
+    if (!container || displayProducts.length <= 1) return;
+    const maxScroll = container.scrollWidth - container.clientWidth;
+    if (maxScroll <= 0) return;
+    const currentScroll = Math.abs(container.scrollLeft);
+    const progress = Math.min(1, Math.max(0, currentScroll / maxScroll));
+    const activeDot = Math.round(progress * (displayProducts.length - 1));
+    setCurrentIndex(activeDot);
+  }, [displayProducts.length]);
 
-    const containerRect = container.getBoundingClientRect();
-    let closestIndex = 0;
-    let minDistance = Infinity;
-
-    Array.from(container.children).forEach((child, index) => {
-      const childRect = (child as HTMLElement).getBoundingClientRect();
-      const distance = isRtl
-        ? Math.abs(childRect.right - containerRect.right)
-        : Math.abs(childRect.left - containerRect.left);
-
-      if (distance < minDistance) {
-        minDistance = distance;
-        closestIndex = index;
-      }
+  const scrollToDot = (idx: number) => {
+    const container = scrollRef.current;
+    if (!container) return;
+    const maxScroll = container.scrollWidth - container.clientWidth;
+    const target = (idx / (displayProducts.length - 1)) * maxScroll;
+    container.scrollTo({
+      left: isRtl ? -target : target,
+      top: 0,
+      behavior: "smooth",
     });
-
-    if (closestIndex !== currentIndexRef.current) {
-      setCurrentIndex(closestIndex);
-    }
-  }, [isRtl]);
+    setCurrentIndex(idx);
+  };
 
   if (displayProducts.length === 0) {
     return null;
   }
 
   return (
-    <section className="space-y-6 u3-reveal border-b border-silver/40 dark:border-white/10 pb-12 last:border-b-0">
+    <section className="space-y-5 u3-reveal border-b border-silver/40 dark:border-white/10 pb-12 last:border-b-0">
       {/* Collection Section Header */}
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-silver/50 dark:border-white/10 pb-4">
-        <div className="space-y-1.5">
+        <div className="space-y-1">
           {!hideCategoryTag && (
             <div className="flex items-center gap-2">
               <span className="inline-flex items-center gap-1.5 text-[10px] sm:text-[11px] font-heading font-bold uppercase tracking-[0.2em] text-[#73777D] dark:text-[#A7ABB1]">
                 <Layers className="w-3.5 h-3.5 text-jet dark:text-white" />
-                <span>{categoryTag || (isRtl ? "كوليكشن حصري" : "EXCLUSIVE COLLECTION")}</span>
+                <span>{categoryTag || (isRtl ? "كوليكشن مميز" : "EXCLUSIVE COLLECTION")}</span>
               </span>
             </div>
           )}
@@ -153,33 +147,29 @@ export function CollectionSlider({
           </h2>
 
           {description && (
-            <p className="text-xs sm:text-sm text-[#73777D] dark:text-[#A7ABB1] max-w-xl line-clamp-1 leading-relaxed">
+            <p className="text-xs sm:text-sm text-[#73777D] dark:text-[#A7ABB1] max-w-xl line-clamp-1">
               {description}
             </p>
           )}
         </div>
 
-        {/* Action Controls: Smooth Arrow Buttons & View All Link */}
+        {/* Action Controls: Arrow Buttons & View All Link */}
         <div className="flex items-center gap-3 self-end sm:self-auto">
           <Link
             href={viewAllLink}
-            className="u3-link-underline text-xs font-bold uppercase tracking-wider text-jet dark:text-white hover:text-black dark:hover:text-white flex items-center gap-1 transition-all group"
+            className="u3-link-underline text-xs font-bold uppercase tracking-wider text-jet dark:text-white hover:text-black dark:hover:text-white flex items-center gap-1"
           >
             <span>{viewAllLabel}</span>
-            {isRtl ? (
-              <ArrowLeft className="w-3.5 h-3.5 transition-transform duration-300 group-hover:-translate-x-1" />
-            ) : (
-              <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
-            )}
+            <ArrowRight className={`w-3.5 h-3.5 ${isRtl ? "rotate-180" : ""}`} />
           </Link>
 
           {displayProducts.length > 1 && (
-            <div className="flex items-center gap-2 pl-2 rtl:pl-0 rtl:pr-2 border-l rtl:border-l-0 rtl:border-r border-silver/60 dark:border-[#30343A]">
+            <div className="flex items-center gap-1.5 pl-2 rtl:pl-0 rtl:pr-2 border-l rtl:border-l-0 rtl:border-r border-silver/60 dark:border-[#30343A]">
               <button
                 type="button"
                 onClick={handlePrev}
                 aria-label="Previous product"
-                className="w-8 h-8 rounded-full border border-silver/80 dark:border-[#383C44] hover:border-jet dark:hover:border-white bg-white dark:bg-[#1E2024] hover:bg-jet dark:hover:bg-white hover:text-white dark:hover:text-[#111214] flex items-center justify-center text-jet dark:text-white transition-all duration-300 hover:scale-110 active:scale-90 shadow-2xs cursor-pointer"
+                className="w-8 h-8 rounded-full border border-silver/80 dark:border-[#383C44] hover:border-jet dark:hover:border-white bg-white dark:bg-[#1E2024] hover:bg-jet dark:hover:bg-white hover:text-white dark:hover:text-[#111214] flex items-center justify-center text-jet dark:text-white transition-all duration-200 hover:scale-105 active:scale-95 shadow-2xs cursor-pointer"
               >
                 <ChevronLeft className="w-4 h-4 rtl:rotate-180" />
               </button>
@@ -187,7 +177,7 @@ export function CollectionSlider({
                 type="button"
                 onClick={handleNext}
                 aria-label="Next product"
-                className="w-8 h-8 rounded-full border border-silver/80 dark:border-[#383C44] hover:border-jet dark:hover:border-white bg-white dark:bg-[#1E2024] hover:bg-jet dark:hover:bg-white hover:text-white dark:hover:text-[#111214] flex items-center justify-center text-jet dark:text-white transition-all duration-300 hover:scale-110 active:scale-90 shadow-2xs cursor-pointer"
+                className="w-8 h-8 rounded-full border border-silver/80 dark:border-[#383C44] hover:border-jet dark:hover:border-white bg-white dark:bg-[#1E2024] hover:bg-jet dark:hover:bg-white hover:text-white dark:hover:text-[#111214] flex items-center justify-center text-jet dark:text-white transition-all duration-200 hover:scale-105 active:scale-95 shadow-2xs cursor-pointer"
               >
                 <ChevronRight className="w-4 h-4 rtl:rotate-180" />
               </button>
@@ -196,7 +186,7 @@ export function CollectionSlider({
         </div>
       </div>
 
-      {/* Horizontal Carousel Track with Pause on Hover */}
+      {/* Horizontal Carousel Track: strictly horizontal overflow */}
       <div
         className="relative group"
         onMouseEnter={() => setIsHovered(true)}
@@ -207,40 +197,35 @@ export function CollectionSlider({
         <div
           ref={scrollRef}
           onScroll={handleScroll}
-          className="flex gap-4 sm:gap-6 overflow-x-auto scrollbar-none py-3 px-1 scroll-smooth snap-x snap-mandatory"
+          className="flex gap-4 sm:gap-6 overflow-x-auto scrollbar-none py-2 px-1 scroll-smooth snap-x snap-mandatory"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
-          {displayProducts.map((p, idx) => (
+          {displayProducts.map((p) => (
             <div
               key={p.id}
-              className={`w-[56vw] max-w-[210px] sm:w-[230px] md:w-[250px] shrink-0 snap-start transition-all duration-500 transform-gpu ${
-                idx === currentIndex ? "scale-[1.01]" : "opacity-95"
-              }`}
+              className="w-[52vw] max-w-[210px] sm:w-[230px] md:w-[245px] shrink-0 snap-start"
             >
               <ProductCard product={p} lang={lang} />
             </div>
           ))}
         </div>
 
-        {/* Carousel Pagination Indicator Dots (Elongating Luxury Active Pill) */}
+        {/* Carousel Pagination Indicator Dots */}
         {displayProducts.length > 1 && (
           <div className="flex items-center justify-center gap-2 pt-4">
-            {displayProducts.map((_, idx) => {
-              const isActive = idx === currentIndex;
-              return (
-                <button
-                  key={idx}
-                  type="button"
-                  onClick={() => scrollToIndex(idx)}
-                  aria-label={`Go to slide ${idx + 1}`}
-                  className={`transition-all duration-500 ease-out rounded-full ${
-                    isActive
-                      ? "w-8 h-2 bg-[#111214] dark:bg-white shadow-xs scale-105"
-                      : "w-2 h-2 bg-silver/60 dark:bg-white/20 hover:bg-jet/60 dark:hover:bg-white/60 hover:scale-125 cursor-pointer"
-                  }`}
-                />
-              );
-            })}
+            {displayProducts.map((_, idx) => (
+              <button
+                key={idx}
+                type="button"
+                onClick={() => scrollToDot(idx)}
+                aria-label={`Go to slide ${idx + 1}`}
+                className={`transition-all duration-300 rounded-full cursor-pointer ${
+                  idx === currentIndex
+                    ? "w-7 h-2 bg-[#111214] dark:bg-white shadow-xs"
+                    : "w-2 h-2 bg-silver/60 dark:bg-white/20 hover:bg-jet dark:hover:bg-white"
+                }`}
+              />
+            ))}
           </div>
         )}
       </div>
