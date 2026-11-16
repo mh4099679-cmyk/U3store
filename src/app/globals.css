@@ -99,13 +99,13 @@ html.dark .bg-offwhite {
   background-color: #0E0F11 !important;
 }
 
-/* Card surfaces in dark mode: rich dark charcoal with clean borders */
-html.dark .bg-white:not(.u3-keep-white),
-html.dark div.bg-white:not(.u3-keep-white),
-html.dark section.bg-white:not(.u3-keep-white),
-html.dark aside.bg-white:not(.u3-keep-white),
-html.dark article.bg-white:not(.u3-keep-white) {
-  background-color: #181A1D;
+/* Card surfaces in dark mode: rich dark charcoal with clean borders
+   (Excludes buttons, links, badges, and elements with explicit keep-white) */
+html.dark div.bg-white:not(button):not(a):not(span):not([class*="badge"]):not([class*="btn"]):not([class*="u3-btn"]):not(.u3-keep-white):not([class*="dark:bg-"]),
+html.dark section.bg-white:not([class*="bg-[#111214]"]):not([class*="bg-black"]):not(.u3-keep-white):not([class*="dark:bg-"]),
+html.dark aside.bg-white:not(.u3-keep-white):not([class*="dark:bg-"]),
+html.dark article.bg-white:not(.u3-keep-white):not([class*="dark:bg-"]) {
+  background-color: #16181B;
   border-color: #2E3238;
 }
 
@@ -118,12 +118,12 @@ html.dark .bg-neutral-50 {
 }
 
 /* Linear gradients starting from white */
-html.dark .from-white {
+html.dark .from-white:not([class*="dark:from-"]) {
   --tw-gradient-from: #181A1D var(--tw-gradient-from-position) !important;
   --tw-gradient-to: #111214 var(--tw-gradient-to-position) !important;
   --tw-gradient-stops: var(--tw-gradient-from), #15161A var(--tw-gradient-via-position), var(--tw-gradient-to) !important;
 }
-html.dark .to-\[\#F9FAFB\] {
+html.dark .to-\[\#F9FAFB\]:not([class*="dark:to-"]) {
   --tw-gradient-to: #111214 var(--tw-gradient-to-position) !important;
 }
 
@@ -135,14 +135,45 @@ html.dark .hover\:bg-\[\#F9FAFB\]:hover {
   background-color: #22252A !important;
 }
 
-/* Text readability in dark mode */
-html.dark .text-jet,
-html.dark h1:not(.u3-keep-dark),
-html.dark h2:not(.u3-keep-dark),
-html.dark h3:not(.u3-keep-dark),
-html.dark h4:not(.u3-keep-dark),
-html.dark h5:not(.u3-keep-dark),
-html.dark h6:not(.u3-keep-dark) {
+/* Primary explicit white CTA action buttons (e.g. Hero button, Our Story, Shop Collection)
+   In Dark Mode: KEEP AS BRILLIANT WHITE with PITCH BLACK TEXT for supreme luxury streetwear aesthetic */
+html.dark a.bg-white,
+html.dark a[class*="bg-white"]:not([class*="dark:bg-"]),
+html.dark button.bg-white:not([class*="dark:bg-"]),
+html.dark .u3-btn-solid-white,
+html.dark .btn-white {
+  background-color: #FFFFFF !important;
+  color: #111214 !important;
+  border-color: #FFFFFF !important;
+}
+
+html.dark a.bg-white:hover,
+html.dark a[class*="bg-white"]:not([class*="dark:bg-"]):hover,
+html.dark button.bg-white:not([class*="dark:bg-"]):hover,
+html.dark .u3-btn-solid-white:hover,
+html.dark .btn-white:hover {
+  background-color: #E5E7EB !important;
+  color: #111214 !important;
+}
+
+/* ALL text and icons inside white CTA buttons/links MUST be solid pitch black, NEVER white */
+html.dark a.bg-white *,
+html.dark a[class*="bg-white"]:not([class*="dark:bg-"]) *,
+html.dark button.bg-white:not([class*="dark:bg-"]) *,
+html.dark .u3-btn-solid-white *,
+html.dark .btn-white * {
+  color: #111214 !important;
+  stroke: #111214 !important;
+}
+
+/* Text readability in dark mode (ONLY outside white buttons) */
+html.dark .text-jet:not(a.bg-white):not(button.bg-white):not(.u3-btn-solid-white),
+html.dark h1:not(.u3-keep-dark):not(a.bg-white *):not(.u3-btn-solid-white *),
+html.dark h2:not(.u3-keep-dark):not(a.bg-white *):not(.u3-btn-solid-white *),
+html.dark h3:not(.u3-keep-dark):not(a.bg-white *):not(.u3-btn-solid-white *),
+html.dark h4:not(.u3-keep-dark):not(a.bg-white *):not(.u3-btn-solid-white *),
+html.dark h5:not(.u3-keep-dark):not(a.bg-white *):not(.u3-btn-solid-white *),
+html.dark h6:not(.u3-keep-dark):not(a.bg-white *):not(.u3-btn-solid-white *) {
   color: #FFFFFF !important;
 }
 
@@ -241,17 +272,6 @@ html.dark textarea {
 html.dark input::placeholder,
 html.dark textarea::placeholder {
   color: #6C727D !important;
-}
-
-/* Primary explicit white CTA action buttons */
-html.dark .u3-btn-solid-white {
-  background-color: #FFFFFF !important;
-  color: #111214 !important;
-}
-
-html.dark .u3-btn-solid-white:hover {
-  background-color: #E1E3E5 !important;
-  color: #111214 !important;
 }
 
 /* Secondary outline buttons and links */

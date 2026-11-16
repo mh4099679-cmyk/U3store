@@ -520,25 +520,32 @@ export default async function HomePage() {
           .map((sec) => (
             <section
               key={sec.id}
-              className="bg-[#111214] text-white p-10 sm:p-14 border border-[#292B2E] rounded-2xl flex flex-col md:flex-row items-center justify-between gap-8 u3-reveal"
+              className="relative overflow-hidden bg-gradient-to-br from-[#16181B] via-[#111214] to-[#0D0E10] text-white p-8 sm:p-12 lg:p-14 border border-white/10 rounded-3xl flex flex-col md:flex-row items-center justify-between gap-8 u3-reveal shadow-2xl"
             >
-              <div className="max-w-2xl space-y-3">
-                <p className="text-xs uppercase tracking-[0.25em] text-[#BFC2C6]">
-                  {isRtl ? sec.subtitle_ar || sec.subtitle_en : sec.subtitle_en}
-                </p>
-                <h2 className="font-heading text-3xl font-bold">
+              <div className="absolute top-0 end-0 w-80 h-80 bg-white/5 rounded-full blur-3xl pointer-events-none" />
+              <div className="max-w-2xl space-y-3.5 relative z-10 text-center md:text-start flex flex-col items-center md:items-start">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-[11px] font-mono uppercase tracking-[0.2em] text-[#BFC2C6]">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  <span>{isRtl ? sec.subtitle_ar || sec.subtitle_en : sec.subtitle_en}</span>
+                </div>
+                <h2 className="font-heading text-2xl sm:text-4xl font-extrabold tracking-tight text-white leading-tight">
                   {isRtl ? sec.title_ar || sec.title_en : sec.title_en}
                 </h2>
-                <p className="text-sm text-[#E1E3E5] leading-relaxed">
+                <p className="text-xs sm:text-sm text-[#E1E3E5] leading-relaxed font-light">
                   {isRtl ? sec.description_ar || sec.description_en : sec.description_en}
                 </p>
               </div>
               {sec.button_link && (
                 <Link
                   href={sec.button_link}
-                  className="bg-white hover:bg-[#E1E3E5] text-[#111214] font-heading text-xs font-bold uppercase tracking-widest px-7 py-4 rounded-xl shrink-0 transition-colors"
+                  className="relative z-10 group bg-white hover:bg-[#E1E3E5] text-[#111214] font-heading text-xs sm:text-sm font-bold uppercase tracking-widest px-8 py-4 rounded-xl shrink-0 transition-all duration-300 shadow-lg hover:shadow-2xl hover:scale-105 active:scale-95 inline-flex items-center gap-3 u3-btn-solid-white cursor-pointer"
                 >
-                  {isRtl ? sec.button_text_ar || sec.button_text_en : sec.button_text_en}
+                  <span className="text-[#111214]">{isRtl ? sec.button_text_ar || sec.button_text_en : sec.button_text_en}</span>
+                  <ArrowRight
+                    className={`w-4 h-4 text-[#111214] transition-transform duration-200 ${
+                      isRtl ? "rotate-180 group-hover:-translate-x-1.5" : "group-hover:translate-x-1.5"
+                    }`}
+                  />
                 </Link>
               )}
             </section>
