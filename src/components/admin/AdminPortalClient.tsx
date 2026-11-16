@@ -1015,7 +1015,7 @@ export function AdminPortalClient({
   return (
     <div
       dir={lang === "ar" ? "rtl" : "ltr"}
-      className="min-h-screen bg-offwhite text-jet flex flex-col"
+      className="min-h-screen bg-offwhite dark:bg-[#0E0F11] text-jet dark:text-[#F5F5F5] flex flex-col transition-colors duration-200"
     >
       {/* Top Admin Bar */}
       <header className="sticky top-0 z-40 bg-[#111214] text-white border-b border-[#292B2E] px-3 sm:px-6 h-16 flex items-center justify-between gap-2 sm:gap-4">
@@ -1583,14 +1583,14 @@ export function AdminPortalClient({
                 </div>
               </div>
 
-              <div className="flex flex-wrap items-center justify-between gap-4 border-b border-silver/60 pb-4">
+              <div className="flex flex-wrap items-center justify-between gap-4 border-b border-silver/60 dark:border-white/10 pb-4">
                 <div>
-                  <h1 className="font-heading text-2xl font-bold text-jet">
+                  <h1 className="font-heading text-2xl font-bold text-jet dark:text-white">
                     {lang === "ar"
                       ? "لوحة التحكم والإحصائيات المباشرة"
                       : "EXECUTIVE STORE DASHBOARD"}
                   </h1>
-                  <p className="text-xs text-neutralgray">
+                  <p className="text-xs text-neutralgray dark:text-[#A7ABB1]">
                     {lang === "ar"
                       ? "نظرة شاملة وواضحة على المبيعات والطلبات والمخزون الفعلي (مرتبطة مباشرة بقاعدة البيانات)."
                       : "Clear, real-time overview of your store's verified revenue, orders, and inventory."}
@@ -1666,25 +1666,25 @@ export function AdminPortalClient({
                 <button
                   type="button"
                   onClick={() => setActiveSection("orders")}
-                  className="bg-gradient-to-br from-white to-[#F9FAFB] text-jet p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl border border-silver/60 hover:border-jet text-start shadow-xs hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 group flex flex-col justify-between"
+                  className="bg-white dark:bg-[#181A1D] text-jet dark:text-white p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl border border-silver/60 dark:border-white/10 hover:border-jet dark:hover:border-white/30 text-start shadow-xs hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 group flex flex-col justify-between cursor-pointer"
                 >
                   <div>
                     <div className="flex items-center justify-between mb-2.5 sm:mb-3">
-                      <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-jet text-white flex items-center justify-center group-hover:scale-110 transition-transform">
-                        <ShoppingCart className="w-4 h-4 sm:w-5 sm:h-5" />
+                      <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-jet dark:bg-white/10 text-white flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <ShoppingCart className="w-4 h-4 sm:w-5 sm:h-5 text-white dark:text-sky-400" />
                       </div>
-                      <span className="text-[10px] font-mono font-bold text-neutralgray px-2 py-0.5 rounded-full bg-neutral-100">
+                      <span className="text-[10px] font-mono font-bold text-neutralgray dark:text-neutral-300 px-2 py-0.5 rounded-full bg-neutral-100 dark:bg-white/10">
                         {lang === "ar" ? "الطلبات" : "ORDERS"}
                       </span>
                     </div>
-                    <p className="text-[10px] sm:text-[11px] uppercase tracking-wider text-neutralgray font-bold">
+                    <p className="text-[10px] sm:text-[11px] uppercase tracking-wider text-neutralgray dark:text-[#A7ABB1] font-bold">
                       {lang === "ar" ? "إجمالي الطلبات" : "Total Orders"}
                     </p>
-                    <p className="font-heading text-xl sm:text-2xl font-bold text-jet tracking-tight mt-1">
+                    <p className="font-heading text-xl sm:text-2xl font-bold text-jet dark:text-white tracking-tight mt-1">
                       <AnimatedCounter value={dashboardData.stats.totalOrders} lang={lang} />
                     </p>
                   </div>
-                  <span className="text-[9px] sm:text-[10px] text-neutralgray mt-2 sm:mt-3 block truncate">
+                  <span className="text-[9px] sm:text-[10px] text-neutralgray dark:text-[#73777D] mt-2 sm:mt-3 block truncate">
                     {lang === "ar" ? "اضغط للإدارة" : "Manage orders"}
                   </span>
                 </button>
@@ -1693,25 +1693,25 @@ export function AdminPortalClient({
                 <button
                   type="button"
                   onClick={() => setActiveSection("customers")}
-                  className="bg-gradient-to-br from-white to-[#F9FAFB] text-jet p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl border border-silver/60 hover:border-jet text-start shadow-xs hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 group flex flex-col justify-between"
+                  className="bg-white dark:bg-[#181A1D] text-jet dark:text-white p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl border border-silver/60 dark:border-white/10 hover:border-jet dark:hover:border-white/30 text-start shadow-xs hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 group flex flex-col justify-between cursor-pointer"
                 >
                   <div>
                     <div className="flex items-center justify-between mb-2.5 sm:mb-3">
-                      <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-neutral-800 text-white flex items-center justify-center group-hover:scale-110 transition-transform">
-                        <Users className="w-4 h-4 sm:w-5 sm:h-5" />
+                      <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-neutral-800 dark:bg-white/10 text-white flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <Users className="w-4 h-4 sm:w-5 sm:h-5 text-white dark:text-purple-400" />
                       </div>
-                      <span className="text-[10px] font-mono font-bold text-neutralgray px-2 py-0.5 rounded-full bg-neutral-100">
+                      <span className="text-[10px] font-mono font-bold text-neutralgray dark:text-neutral-300 px-2 py-0.5 rounded-full bg-neutral-100 dark:bg-white/10">
                         {lang === "ar" ? "العملاء" : "USERS"}
                       </span>
                     </div>
-                    <p className="text-[10px] sm:text-[11px] uppercase tracking-wider text-neutralgray font-bold">
+                    <p className="text-[10px] sm:text-[11px] uppercase tracking-wider text-neutralgray dark:text-[#A7ABB1] font-bold">
                       {lang === "ar" ? "إجمالي العملاء" : "Total Customers"}
                     </p>
-                    <p className="font-heading text-xl sm:text-2xl font-bold text-jet tracking-tight mt-1">
+                    <p className="font-heading text-xl sm:text-2xl font-bold text-jet dark:text-white tracking-tight mt-1">
                       <AnimatedCounter value={dashboardData.stats.totalCustomers} lang={lang} />
                     </p>
                   </div>
-                  <span className="text-[9px] sm:text-[10px] text-neutralgray mt-2 sm:mt-3 block truncate">
+                  <span className="text-[9px] sm:text-[10px] text-neutralgray dark:text-[#73777D] mt-2 sm:mt-3 block truncate">
                     {lang === "ar" ? "مسجلين وزوار" : "Registered & guests"}
                   </span>
                 </button>
@@ -1720,21 +1720,21 @@ export function AdminPortalClient({
                 <button
                   type="button"
                   onClick={() => setActiveSection("inventory")}
-                  className="bg-gradient-to-br from-white to-amber-50/40 text-jet p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl border border-amber-200/80 hover:border-amber-400 text-start shadow-xs hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 group flex flex-col justify-between"
+                  className="bg-white dark:bg-[#181A1D] text-jet dark:text-white p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl border border-amber-200/80 dark:border-amber-500/20 hover:border-amber-400 dark:hover:border-amber-400 text-start shadow-xs hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 group flex flex-col justify-between cursor-pointer"
                 >
                   <div>
                     <div className="flex items-center justify-between mb-2.5 sm:mb-3">
-                      <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-amber-500/10 text-amber-700 border border-amber-300 flex items-center justify-center group-hover:scale-110 transition-transform">
+                      <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-300 dark:border-amber-500/30 flex items-center justify-center group-hover:scale-110 transition-transform">
                         <AlertTriangle className="w-4 h-4 sm:w-5 sm:h-5" />
                       </div>
-                      <span className="text-[10px] font-mono font-bold text-amber-800 px-2 py-0.5 rounded-full bg-amber-100">
+                      <span className="text-[10px] font-mono font-bold text-amber-800 dark:text-amber-300 px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-500/20">
                         {lang === "ar" ? "تنبيه" : "STOCK"}
                       </span>
                     </div>
-                    <p className="text-[10px] sm:text-[11px] uppercase tracking-wider text-amber-900 font-bold">
+                    <p className="text-[10px] sm:text-[11px] uppercase tracking-wider text-amber-900 dark:text-amber-400 font-bold">
                       {lang === "ar" ? "مخزون منخفض" : "Low Stock"}
                     </p>
-                    <p className="font-heading text-xl sm:text-2xl font-bold text-jet tracking-tight mt-1">
+                    <p className="font-heading text-xl sm:text-2xl font-bold text-jet dark:text-white tracking-tight mt-1">
                       <AnimatedCounter
                         value={
                           Number(dashboardData.stats.lowStockCount || 0) +
@@ -1744,31 +1744,31 @@ export function AdminPortalClient({
                       />
                     </p>
                   </div>
-                  <span className="text-[9px] sm:text-[10px] text-neutralgray mt-2 sm:mt-3 block truncate">
+                  <span className="text-[9px] sm:text-[10px] text-neutralgray dark:text-[#73777D] mt-2 sm:mt-3 block truncate">
                     {lang === "ar" ? "فحص المخزون" : "Check stock"}
                   </span>
                 </button>
               </div>
 
               {/* Order Pipeline Status Bar with Curved Cards */}
-              <div className="bg-white border border-silver/60 p-6 sm:p-7 space-y-5 rounded-3xl shadow-sm">
-                <div className="flex flex-wrap items-center justify-between gap-3 border-b border-silver/40 pb-4">
+              <div className="bg-white dark:bg-[#181A1D] border border-silver/60 dark:border-white/10 p-6 sm:p-7 space-y-5 rounded-3xl shadow-sm">
+                <div className="flex flex-wrap items-center justify-between gap-3 border-b border-silver/40 dark:border-white/10 pb-4">
                   <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-xl bg-[#111214] text-white flex items-center justify-center shadow-xs">
+                    <div className="w-8 h-8 rounded-xl bg-[#111214] dark:bg-white/10 text-white flex items-center justify-center shadow-xs">
                       <Layers className="w-4 h-4 text-emerald-400" />
                     </div>
                     <div>
-                      <h2 className="font-heading text-sm font-bold text-jet tracking-wide">
+                      <h2 className="font-heading text-sm font-bold text-jet dark:text-white tracking-wide">
                         {lang === "ar" ? "مسار ومراحل معالجة الطلبات" : "ORDER FULFILLMENT PIPELINE"}
                       </h2>
-                      <p className="text-[11px] text-neutralgray">
+                      <p className="text-[11px] text-neutralgray dark:text-[#A7ABB1]">
                         {lang === "ar" ? "تتبع فوري لمراحل دورة حياة الأوردر من الدفع حتى التسليم" : "Live pipeline tracking from payment verification to doorstep delivery"}
                       </p>
                     </div>
                   </div>
 
                   <div className="flex items-center gap-2">
-                    <span className="inline-flex items-center gap-1.5 text-[11px] font-mono font-bold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
+                    <span className="inline-flex items-center gap-1.5 text-[11px] font-mono font-bold text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-200 dark:border-emerald-500/20">
                       <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                       {lang === "ar" ? "مزامنة لحظية مباشرة" : "Live Real-Time Sync"}
                     </span>
@@ -1858,30 +1858,30 @@ export function AdminPortalClient({
                         }}
                         className={`p-4 rounded-2xl text-start transition-all duration-200 group flex flex-col justify-between cursor-pointer border relative overflow-hidden ${
                           hasItems
-                            ? "bg-white border-neutral-300 shadow-xs hover:shadow-md hover:-translate-y-1 " + st.activeBorder
-                            : "bg-[#FAFAFA] border-silver/60 hover:bg-white hover:border-neutral-400 hover:-translate-y-0.5"
+                            ? "bg-white dark:bg-[#22252A] border-neutral-300 dark:border-white/15 text-jet dark:text-white shadow-xs hover:shadow-md hover:-translate-y-1 " + st.activeBorder
+                            : "bg-[#FAFAFA] dark:bg-[#141517] border-silver/60 dark:border-white/5 hover:bg-white dark:hover:bg-[#22252A] hover:border-neutral-400 dark:hover:border-white/20 hover:-translate-y-0.5"
                         }`}
                       >
                         <div className="flex items-center justify-between gap-1 mb-3">
                           <div className="flex items-center gap-1.5">
-                            <span className="text-[10px] font-mono font-bold text-neutral-400 bg-neutral-100 px-1.5 py-0.5 rounded-md">
+                            <span className="text-[10px] font-mono font-bold text-neutral-400 dark:text-neutral-300 bg-neutral-100 dark:bg-white/10 px-1.5 py-0.5 rounded-md">
                               {st.step}
                             </span>
                             <span className={`w-2 h-2 rounded-full ${st.dotColor} shrink-0`} />
                           </div>
-                          <IconComp className="w-4 h-4 text-neutral-400 group-hover:text-jet transition-colors" />
+                          <IconComp className="w-4 h-4 text-neutral-400 dark:text-neutral-400 group-hover:text-jet dark:group-hover:text-white transition-colors" />
                         </div>
 
                         <div className="space-y-1">
-                          <p className="text-[11px] font-bold text-neutral-700 truncate">
+                          <p className="text-[11px] font-bold text-neutral-700 dark:text-neutral-200 truncate">
                             {lang === "ar" ? st.ar : st.en}
                           </p>
                           <div className="flex items-baseline justify-between">
-                            <p className="font-heading text-2xl sm:text-3xl font-extrabold text-jet font-mono tracking-tight">
+                            <p className="font-heading text-2xl sm:text-3xl font-extrabold text-jet dark:text-white font-mono tracking-tight">
                               <AnimatedCounter value={st.val} lang={lang} />
                             </p>
                             {hasItems && (
-                              <span className="text-[10px] font-bold text-neutral-400">
+                              <span className="text-[10px] font-bold text-neutral-400 dark:text-neutral-400">
                                 {lang === "ar" ? "طلب" : "orders"}
                               </span>
                             )}
@@ -1895,16 +1895,16 @@ export function AdminPortalClient({
 
               {/* Recent Orders & Payment Reports */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="bg-white border border-silver/60 p-6 space-y-4 rounded-3xl shadow-xs">
-                  <div className="flex justify-between items-center border-b border-silver/30 pb-3">
-                    <h3 className="font-heading text-sm font-bold uppercase text-jet flex items-center gap-2">
-                      <ShoppingCart className="w-4 h-4 text-jet" />
+                <div className="bg-white dark:bg-[#181A1D] border border-silver/60 dark:border-white/10 p-6 space-y-4 rounded-3xl shadow-xs">
+                  <div className="flex justify-between items-center border-b border-silver/30 dark:border-white/10 pb-3">
+                    <h3 className="font-heading text-sm font-bold uppercase text-jet dark:text-white flex items-center gap-2">
+                      <ShoppingCart className="w-4 h-4 text-jet dark:text-white" />
                       <span>{lang === "ar" ? "أحدث الطلبات" : "RECENT ORDERS"}</span>
                     </h3>
                     <button
                       type="button"
                       onClick={() => setActiveSection("orders")}
-                      className="text-xs text-jet hover:underline font-bold"
+                      className="text-xs text-jet dark:text-neutral-300 hover:underline font-bold cursor-pointer"
                     >
                       {lang === "ar" ? "عرض كل الطلبات ←" : "View All →"}
                     </button>
@@ -1924,20 +1924,20 @@ export function AdminPortalClient({
                               setActiveSection("orders");
                               setGlobalQuery(o.order_number);
                             }}
-                            className="border border-silver/50 p-3.5 text-xs flex justify-between items-center bg-[#F9FAFB] hover:bg-white hover:border-[#111214] rounded-2xl transition-all shadow-2xs cursor-pointer group"
+                            className="border border-silver/50 dark:border-white/10 p-3.5 text-xs flex justify-between items-center bg-[#F9FAFB] dark:bg-[#141517] hover:bg-white dark:hover:bg-[#22252A] hover:border-[#111214] dark:hover:border-white/20 rounded-2xl transition-all shadow-2xs cursor-pointer group"
                           >
                             <div className="flex items-center gap-3 min-w-0">
-                              <div className="w-9 h-9 rounded-xl bg-[#111214] text-white flex items-center justify-center font-bold text-xs shrink-0 group-hover:scale-105 transition-transform">
+                              <div className="w-9 h-9 rounded-xl bg-[#111214] dark:bg-white/10 text-white flex items-center justify-center font-bold text-xs shrink-0 group-hover:scale-105 transition-transform">
                                 {initial}
                               </div>
                               <div className="truncate">
-                                <p className="font-bold font-mono text-jet text-xs tracking-wide">#{o.order_number}</p>
-                                <p className="text-neutralgray text-[11px] truncate">{o.customer_name}</p>
+                                <p className="font-bold font-mono text-jet dark:text-white text-xs tracking-wide">#{o.order_number}</p>
+                                <p className="text-neutralgray dark:text-[#A7ABB1] text-[11px] truncate">{o.customer_name}</p>
                               </div>
                             </div>
                             <div className="text-end shrink-0 ms-2">
-                              <p className="font-bold font-mono text-jet text-xs">{formatCurrency(o.total_amount, lang)}</p>
-                              <span className="inline-block mt-1 text-[9px] font-bold bg-[#111214] text-white px-2 py-0.5 rounded-md uppercase tracking-wider">
+                              <p className="font-bold font-mono text-jet dark:text-white text-xs">{formatCurrency(o.total_amount, lang)}</p>
+                              <span className="inline-block mt-1 text-[9px] font-bold bg-[#111214] dark:bg-white/10 text-white dark:text-[#E1E3E5] border dark:border-white/10 px-2 py-0.5 rounded-md uppercase tracking-wider">
                                 {o.order_status}
                               </span>
                             </div>
@@ -1948,22 +1948,22 @@ export function AdminPortalClient({
                   )}
                 </div>
 
-                <div className="bg-white border border-silver/60 p-6 space-y-4 rounded-3xl shadow-xs">
-                  <div className="flex justify-between items-center border-b border-silver/30 pb-3">
-                    <h3 className="font-heading text-sm font-bold uppercase text-jet flex items-center gap-2">
-                      <CreditCard className="w-4 h-4 text-emerald-600" />
+                <div className="bg-white dark:bg-[#181A1D] border border-silver/60 dark:border-white/10 p-6 space-y-4 rounded-3xl shadow-xs">
+                  <div className="flex justify-between items-center border-b border-silver/30 dark:border-white/10 pb-3">
+                    <h3 className="font-heading text-sm font-bold uppercase text-jet dark:text-white flex items-center gap-2">
+                      <CreditCard className="w-4 h-4 text-emerald-500" />
                       <span>{lang === "ar" ? "أحدث إشعارات الدفع" : "RECENT PAYMENT REPORTS"}</span>
                     </h3>
                     <button
                       type="button"
                       onClick={() => setActiveSection("payments")}
-                      className="text-xs text-jet hover:underline font-bold"
+                      className="text-xs text-jet dark:text-neutral-300 hover:underline font-bold cursor-pointer"
                     >
                       {lang === "ar" ? "مراجعة المدفوعات ←" : "Verify Payments →"}
                     </button>
                   </div>
                   {dashboardData.recentPayments.length === 0 ? (
-                    <p className="text-xs text-neutralgray py-8 text-center">
+                    <p className="text-xs text-neutralgray dark:text-[#A7ABB1] py-8 text-center">
                       {lang === "ar"
                         ? "لا توجد إشعارات تحويل مرسلة حالياً."
                         : "No payment reports submitted yet."}
@@ -1974,20 +1974,20 @@ export function AdminPortalClient({
                         <div
                           key={ps.id}
                           onClick={() => setActiveSection("payments")}
-                          className="border border-silver/50 p-3.5 text-xs flex justify-between items-center bg-[#F9FAFB] hover:bg-white hover:border-[#111214] rounded-2xl transition-all shadow-2xs cursor-pointer group"
+                          className="border border-silver/50 dark:border-white/10 p-3.5 text-xs flex justify-between items-center bg-[#F9FAFB] dark:bg-[#141517] hover:bg-white dark:hover:bg-[#22252A] hover:border-[#111214] dark:hover:border-white/20 rounded-2xl transition-all shadow-2xs cursor-pointer group"
                         >
                           <div className="truncate">
-                            <p className="font-bold font-mono text-jet text-xs">
-                              #{ps.order_number} <span className="text-neutral-400 font-normal">| {ps.transaction_reference ? `Ref: ${ps.transaction_reference}` : (lang === "ar" ? "إيصال مرفوع" : "Receipt Uploaded")}</span>
+                            <p className="font-bold font-mono text-jet dark:text-white text-xs">
+                              #{ps.order_number} <span className="text-neutral-400 dark:text-neutral-400 font-normal">| {ps.transaction_reference ? `Ref: ${ps.transaction_reference}` : (lang === "ar" ? "إيصال مرفوع" : "Receipt Uploaded")}</span>
                             </p>
-                            <p className="text-neutralgray text-[11px] truncate mt-0.5">
+                            <p className="text-neutralgray dark:text-[#A7ABB1] text-[11px] truncate mt-0.5">
                               {ps.customer_name} ({ps.payment_method_code})
                             </p>
                           </div>
                           <span className={`text-[10px] font-bold px-2.5 py-1 rounded-lg shrink-0 ms-2 ${
                             ps.status === "CONFIRMED"
-                              ? "bg-emerald-100 text-emerald-800 border border-emerald-300"
-                              : "bg-amber-100 text-amber-900 border border-amber-300"
+                              ? "bg-emerald-100 dark:bg-emerald-500/20 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-500/30"
+                              : "bg-amber-100 dark:bg-amber-500/20 text-amber-900 dark:text-amber-300 border border-amber-300 dark:border-amber-500/30"
                           }`}>
                             {ps.status}
                           </span>

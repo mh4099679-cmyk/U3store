@@ -206,7 +206,7 @@ export default async function HomePage() {
             <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center justify-center lg:justify-start gap-3 sm:gap-4 w-full sm:w-auto">
               <MagneticButton
                 href={heroButtonLink}
-                className="group bg-white hover:bg-[#E1E3E5] text-[#111214] font-heading font-bold text-xs sm:text-sm uppercase tracking-widest px-8 py-3.5 sm:py-4 inline-flex items-center justify-center gap-3 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 w-full sm:w-auto"
+                className="group u3-btn-solid-white u3-keep-white bg-white hover:bg-[#E1E3E5] text-[#111214] font-heading font-bold text-xs sm:text-sm uppercase tracking-widest px-8 py-3.5 sm:py-4 inline-flex items-center justify-center gap-3 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 w-full sm:w-auto"
               >
                 <span>{heroButtonText}</span>
                 <ArrowRight
