@@ -72,7 +72,6 @@ import {
   Copy,
 } from "lucide-react";
 import { Language, formatCurrency } from "@/lib/i18n/dictionaries";
-import { ThemeSwitcher } from "@/components/store/ThemeSwitcher";
 import { matchesBilingualSearch, STANDARD_COLORS, isColorLight } from "@/lib/search";
 
 function AnimatedCounter({
@@ -640,6 +639,11 @@ export function AdminPortalClient({
       }
     } catch {}
 
+    if (typeof window !== "undefined") {
+      document.documentElement.classList.remove("dark");
+      document.cookie = "u3_admin_theme=light; path=/; max-age=31536000";
+    }
+
     syncAdminState();
     const interval = setInterval(syncAdminState, 1500);
     return () => {
@@ -1015,7 +1019,7 @@ export function AdminPortalClient({
   return (
     <div
       dir={lang === "ar" ? "rtl" : "ltr"}
-      className="min-h-screen bg-offwhite dark:bg-[#0E0F11] text-jet dark:text-[#F5F5F5] flex flex-col transition-colors duration-200"
+      className="min-h-screen bg-offwhite text-jet flex flex-col"
     >
       {/* Top Admin Bar */}
       <header className="sticky top-0 z-40 bg-[#111214] text-white border-b border-[#292B2E] px-3 sm:px-6 h-16 flex items-center justify-between gap-2 sm:gap-4">
@@ -1048,10 +1052,6 @@ export function AdminPortalClient({
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
             <span>{lang === "ar" ? "المتجر يعمل مباشرة" : "Store Live Online"}</span>
           </span>
-
-          <div className="hidden sm:block">
-            <ThemeSwitcher scope="admin" lang={lang} />
-          </div>
 
           {/* Independent Admin EN / AR Switcher */}
           <div className="flex border border-white/20 rounded-xl overflow-hidden text-xs font-bold bg-[#1A1C20] p-0.5">

@@ -58,8 +58,11 @@ export default async function RootLayout({
     (function() {
       try {
         var isAdmin = window.location.pathname.startsWith('/admin');
-        var cookieName = isAdmin ? 'u3_admin_theme=' : 'u3_theme=';
-        var match = document.cookie.split('; ').find(function(row) { return row.startsWith(cookieName); });
+        if (isAdmin) {
+          document.documentElement.classList.remove('dark');
+          return;
+        }
+        var match = document.cookie.split('; ').find(function(row) { return row.startsWith('u3_theme='); });
         var mode = match ? decodeURIComponent(match.split('=')[1]) : '${theme}';
         var isDark = mode === 'dark' || (mode === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
         if (isDark) {
