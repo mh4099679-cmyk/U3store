@@ -254,7 +254,7 @@ export function ProductImageGallery({
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
-        className="relative aspect-square w-full bg-[#FAFAFA] border border-silver/50 rounded-2xl overflow-hidden group shadow-sm touch-pan-y cursor-grab active:cursor-grabbing"
+        className="relative aspect-square w-full bg-[#FAFAFA] dark:bg-[#181A1D] border border-silver/50 dark:border-[#2E3238] rounded-2xl overflow-hidden group shadow-sm touch-pan-y cursor-grab active:cursor-grabbing transition-colors"
       >
         {/* Continuous 1:1 Horizontal Slide Strip with Hardware Acceleration */}
         <div
@@ -355,8 +355,8 @@ export function ProductImageGallery({
                 aria-label={`Go to image ${idx + 1}`}
                 className={`h-1.5 transition-all duration-200 rounded-full cursor-pointer ${
                   isActive
-                    ? "w-6 bg-[#111214]"
-                    : "w-1.5 bg-[#D1D5DB] hover:bg-[#9CA3AF]"
+                    ? "w-6 bg-[#111214] dark:bg-white"
+                    : "w-1.5 bg-[#D1D5DB] dark:bg-white/30 hover:bg-[#9CA3AF] dark:hover:bg-white/60"
                 }`}
               />
             );
@@ -377,8 +377,8 @@ export function ProductImageGallery({
                 aria-label={`${productName} thumbnail ${idx + 1}`}
                 className={`w-16 h-16 sm:w-20 sm:h-20 aspect-square rounded-xl overflow-hidden border-2 shrink-0 transition-all duration-150 cursor-pointer ${
                   isActive
-                    ? "border-[#111214] ring-2 ring-[#111214]/25 scale-[1.03] shadow-sm"
-                    : "border-silver/60 hover:border-silver opacity-70 hover:opacity-100"
+                    ? "border-[#111214] dark:border-white ring-2 ring-[#111214]/25 dark:ring-white/30 scale-[1.03] shadow-sm"
+                    : "border-silver/60 dark:border-[#383C44] hover:border-silver opacity-70 hover:opacity-100"
                 }`}
               >
                 <img

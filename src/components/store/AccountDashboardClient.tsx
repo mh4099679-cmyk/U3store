@@ -215,10 +215,10 @@ export function AccountDashboardClient({
   return (
     <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
       {/* Sidebar */}
-      <aside className="bg-white border border-silver/60 p-5 h-fit space-y-2">
-        <div className="border-b border-silver/50 pb-4 mb-3">
-          <p className="font-heading font-bold text-base text-jet">{customer.fullName}</p>
-          <p className="text-xs text-neutralgray">{customer.email}</p>
+      <aside className="bg-white dark:bg-[#1A1C1F] border border-silver/60 dark:border-[#2E3238] p-5 h-fit space-y-2 transition-colors">
+        <div className="border-b border-silver/50 dark:border-[#2E3238] pb-4 mb-3">
+          <p className="font-heading font-bold text-base text-jet dark:text-white">{customer.fullName}</p>
+          <p className="text-xs text-neutralgray dark:text-[#A7ABB1]">{customer.email}</p>
         </div>
 
         {navTabs.map((item) => {
@@ -231,8 +231,8 @@ export function AccountDashboardClient({
               onClick={() => setTab(item.id)}
               className={`w-full flex items-center gap-3 px-4 py-3 text-xs font-bold uppercase tracking-wider transition-colors ${
                 active
-                  ? "bg-jet text-offwhite"
-                  : "text-jet hover:bg-offwhite"
+                  ? "bg-jet dark:bg-white text-offwhite dark:text-[#111214]"
+                  : "text-jet dark:text-white hover:bg-offwhite dark:hover:bg-[#25282F]"
               }`}
             >
               <Icon className="w-4 h-4" />

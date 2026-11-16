@@ -242,17 +242,17 @@ export default async function HomePage() {
       </section>
 
       {/* 4. Benefits Strip with Sleek Curved Panels (Restored exact design from screenshot) */}
-      <section className="bg-white border-y border-[#E1E3E5] py-5 sm:py-8">
+      <section className="bg-white dark:bg-[#16181B] border-y border-[#E1E3E5] dark:border-[#2A2D32] py-5 sm:py-8 transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-5">
-          <div className="flex items-center gap-3.5 p-4 sm:p-5 border border-[#E9EAEC] bg-gradient-to-br from-[#F7F7F5] to-white hover:to-[#F7F7F5] rounded-2xl shadow-2xs hover:shadow-md transition-all duration-300">
-            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-[#111214] text-white flex items-center justify-center shrink-0 shadow-sm">
-              <Truck className="w-5 h-5 text-[#BFC2C6]" />
+          <div className="flex items-center gap-3.5 p-4 sm:p-5 border border-[#E9EAEC] dark:border-[#2E3238] bg-gradient-to-br from-[#F7F7F5] to-white dark:from-[#1E2024] dark:to-[#181A1D] hover:to-[#F7F7F5] dark:hover:to-[#22252A] rounded-2xl shadow-2xs hover:shadow-md transition-all duration-300">
+            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-[#111214] dark:bg-white text-white dark:text-[#111214] flex items-center justify-center shrink-0 shadow-sm">
+              <Truck className="w-5 h-5 text-[#BFC2C6] dark:text-[#111214]" />
             </div>
             <div>
-              <h3 className="font-heading font-bold text-[#111214] text-xs sm:text-sm tracking-wide">
+              <h3 className="font-heading font-bold text-[#111214] dark:text-white text-xs sm:text-sm tracking-wide">
                 {isRtl ? "توصيل لجميع محافظات مصر الـ 27" : "DELIVERY ACROSS ALL 27 GOVERNORATES"}
               </h3>
-              <p className="text-[11px] sm:text-xs text-[#73777D] mt-0.5 sm:mt-1 leading-snug">
+              <p className="text-[11px] sm:text-xs text-[#73777D] dark:text-[#A7ABB1] mt-0.5 sm:mt-1 leading-snug">
                 {isRtl
                   ? "شحن سريع ومباشر لباب بيتك مع حساب فوري لسعر التوصيل وتتبع لحظي."
                   : "Direct door-to-door shipping with automated zone rates & live tracking."}
@@ -260,15 +260,15 @@ export default async function HomePage() {
             </div>
           </div>
 
-          <div className="flex items-center gap-3.5 p-4 sm:p-5 border border-[#E9EAEC] bg-gradient-to-br from-[#F7F7F5] to-white hover:to-[#F7F7F5] rounded-2xl shadow-2xs hover:shadow-md transition-all duration-300">
-            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-[#111214] text-white flex items-center justify-center shrink-0 shadow-sm">
-              <CreditCard className="w-5 h-5 text-[#BFC2C6]" />
+          <div className="flex items-center gap-3.5 p-4 sm:p-5 border border-[#E9EAEC] dark:border-[#2E3238] bg-gradient-to-br from-[#F7F7F5] to-white dark:from-[#1E2024] dark:to-[#181A1D] hover:to-[#F7F7F5] dark:hover:to-[#22252A] rounded-2xl shadow-2xs hover:shadow-md transition-all duration-300">
+            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-[#111214] dark:bg-white text-white dark:text-[#111214] flex items-center justify-center shrink-0 shadow-sm">
+              <CreditCard className="w-5 h-5 text-[#BFC2C6] dark:text-[#111214]" />
             </div>
             <div>
-              <h3 className="font-heading font-bold text-[#111214] text-xs sm:text-sm tracking-wide">
+              <h3 className="font-heading font-bold text-[#111214] dark:text-white text-xs sm:text-sm tracking-wide">
                 {isRtl ? "إنستاباي وفودافون كاش + فاتورة رقمية" : "INSTAPAY & VODAFONE CASH + DIGITAL INVOICE"}
               </h3>
-              <p className="text-[11px] sm:text-xs text-[#73777D] mt-0.5 sm:mt-1 leading-snug">
+              <p className="text-[11px] sm:text-xs text-[#73777D] dark:text-[#A7ABB1] mt-0.5 sm:mt-1 leading-snug">
                 {isRtl
                   ? "تحويل إلكتروني فوري وآمن مع مراجعة دقيقة وتتبع مباشر لحالة طلبك."
                   : "Instant mobile transfer with rapid verification & live order tracker."}
@@ -276,15 +276,15 @@ export default async function HomePage() {
             </div>
           </div>
 
-          <div className="flex items-center gap-3.5 p-4 sm:p-5 border border-[#E9EAEC] bg-gradient-to-br from-[#F7F7F5] to-white hover:to-[#F7F7F5] rounded-2xl shadow-2xs hover:shadow-md transition-all duration-300">
-            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-[#111214] text-white flex items-center justify-center shrink-0 shadow-sm">
-              <ShieldCheck className="w-5 h-5 text-[#BFC2C6]" />
+          <div className="flex items-center gap-3.5 p-4 sm:p-5 border border-[#E9EAEC] dark:border-[#2E3238] bg-gradient-to-br from-[#F7F7F5] to-white dark:from-[#1E2024] dark:to-[#181A1D] hover:to-[#F7F7F5] dark:hover:to-[#22252A] rounded-2xl shadow-2xs hover:shadow-md transition-all duration-300">
+            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-[#111214] dark:bg-white text-white dark:text-[#111214] flex items-center justify-center shrink-0 shadow-sm">
+              <ShieldCheck className="w-5 h-5 text-[#BFC2C6] dark:text-[#111214]" />
             </div>
             <div>
-              <h3 className="font-heading font-bold text-[#111214] text-xs sm:text-sm tracking-wide">
+              <h3 className="font-heading font-bold text-[#111214] dark:text-white text-xs sm:text-sm tracking-wide">
                 {isRtl ? "تسوق حر وسريع بدون تسجيل" : "FRICTIONLESS GUEST CHECKOUT"}
               </h3>
-              <p className="text-[11px] sm:text-xs text-[#73777D] mt-0.5 sm:mt-1 leading-snug">
+              <p className="text-[11px] sm:text-xs text-[#73777D] dark:text-[#A7ABB1] mt-0.5 sm:mt-1 leading-snug">
                 {isRtl
                   ? "سلة تسوق خاصة وتجربة شراء سلسة وفورية كزائر بدون الحاجة لإنشاء حساب."
                   : "Private cart and smooth instant checkout with complete visitor privacy."}

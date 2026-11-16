@@ -125,19 +125,19 @@ export function CollectionSlider({
         <div className="space-y-1">
           {!hideCategoryTag && (
             <div className="flex items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 text-[10px] sm:text-[11px] font-heading font-bold uppercase tracking-[0.2em] text-[#73777D]">
-                <Layers className="w-3.5 h-3.5 text-jet" />
+              <span className="inline-flex items-center gap-1.5 text-[10px] sm:text-[11px] font-heading font-bold uppercase tracking-[0.2em] text-[#73777D] dark:text-[#A7ABB1]">
+                <Layers className="w-3.5 h-3.5 text-jet dark:text-white" />
                 <span>{categoryTag || (isRtl ? "كوليكشن مميز" : "EXCLUSIVE COLLECTION")}</span>
               </span>
             </div>
           )}
 
-          <h2 className="font-heading text-2xl sm:text-3xl font-bold text-jet tracking-tight">
+          <h2 className="font-heading text-2xl sm:text-3xl font-bold text-jet dark:text-white tracking-tight">
             {name}
           </h2>
 
           {description && (
-            <p className="text-xs sm:text-sm text-[#73777D] max-w-xl line-clamp-1">
+            <p className="text-xs sm:text-sm text-[#73777D] dark:text-[#A7ABB1] max-w-xl line-clamp-1">
               {description}
             </p>
           )}
@@ -147,19 +147,19 @@ export function CollectionSlider({
         <div className="flex items-center gap-3 self-end sm:self-auto">
           <Link
             href={viewAllLink}
-            className="u3-link-underline text-xs font-bold uppercase tracking-wider text-jet hover:text-black flex items-center gap-1"
+            className="u3-link-underline text-xs font-bold uppercase tracking-wider text-jet dark:text-white hover:text-black dark:hover:text-white flex items-center gap-1"
           >
             <span>{viewAllLabel}</span>
             <ArrowRight className={`w-3.5 h-3.5 ${isRtl ? "rotate-180" : ""}`} />
           </Link>
 
           {displayProducts.length > 1 && (
-            <div className="flex items-center gap-1.5 pl-2 rtl:pl-0 rtl:pr-2 border-l rtl:border-l-0 rtl:border-r border-silver/60">
+            <div className="flex items-center gap-1.5 pl-2 rtl:pl-0 rtl:pr-2 border-l rtl:border-l-0 rtl:border-r border-silver/60 dark:border-[#30343A]">
               <button
                 type="button"
                 onClick={handlePrev}
                 aria-label="Previous product"
-                className="w-8 h-8 rounded-full border border-silver/80 hover:border-jet bg-white hover:bg-jet hover:text-white flex items-center justify-center text-jet transition-colors shadow-2xs"
+                className="w-8 h-8 rounded-full border border-silver/80 dark:border-[#383C44] hover:border-jet dark:hover:border-white bg-white dark:bg-[#1E2024] hover:bg-jet dark:hover:bg-white hover:text-white dark:hover:text-[#111214] flex items-center justify-center text-jet dark:text-white transition-colors shadow-2xs"
               >
                 <ChevronLeft className="w-4 h-4 rtl:rotate-180" />
               </button>
@@ -167,7 +167,7 @@ export function CollectionSlider({
                 type="button"
                 onClick={handleNext}
                 aria-label="Next product"
-                className="w-8 h-8 rounded-full border border-silver/80 hover:border-jet bg-white hover:bg-jet hover:text-white flex items-center justify-center text-jet transition-colors shadow-2xs"
+                className="w-8 h-8 rounded-full border border-silver/80 dark:border-[#383C44] hover:border-jet dark:hover:border-white bg-white dark:bg-[#1E2024] hover:bg-jet dark:hover:bg-white hover:text-white dark:hover:text-[#111214] flex items-center justify-center text-jet dark:text-white transition-colors shadow-2xs"
               >
                 <ChevronRight className="w-4 h-4 rtl:rotate-180" />
               </button>
@@ -200,7 +200,7 @@ export function CollectionSlider({
           ))}
         </div>
 
-        {/* Carousel Pagination Indicator Dots (نقط تحت تبين اللف والدوران) */}
+        {/* Carousel Pagination Indicator Dots */}
         {displayProducts.length > 1 && (
           <div className="flex items-center justify-center gap-2 pt-4">
             {displayProducts.map((_, idx) => (
@@ -211,8 +211,8 @@ export function CollectionSlider({
                 aria-label={`Go to slide ${idx + 1}`}
                 className={`transition-all duration-300 rounded-full ${
                   idx === currentIndex
-                    ? "w-7 h-2 bg-[#111214] shadow-xs"
-                    : "w-2 h-2 bg-silver/60 hover:bg-jet cursor-pointer"
+                    ? "w-7 h-2 bg-[#111214] dark:bg-white shadow-xs"
+                    : "w-2 h-2 bg-silver/60 dark:bg-white/20 hover:bg-jet dark:hover:bg-white cursor-pointer"
                 }`}
               />
             ))}

@@ -45,10 +45,10 @@ export function ProductCard({
     <Link
       href={`/products/${product.slug}`}
       prefetch={true}
-      className="group bg-white border border-[#E1E3E5] hover:border-[#111214] shadow-xs hover:shadow-xl transition-all duration-500 ease-out flex flex-col overflow-hidden u3-reveal u3-3d-card rounded-2xl w-full hover:-translate-y-1 transform-gpu"
+      className="group bg-white dark:bg-[#1A1C1F] border border-[#E1E3E5] dark:border-[#2E3238] hover:border-[#111214] dark:hover:border-white/60 shadow-xs hover:shadow-xl transition-all duration-500 ease-out flex flex-col overflow-hidden u3-reveal u3-3d-card rounded-2xl w-full hover:-translate-y-1 transform-gpu"
     >
       {/* Product Image Frame: Balanced height & padding with sleek curved corners and smooth 3D depth */}
-      <div className="relative aspect-[4/3] sm:aspect-square max-h-[180px] sm:max-h-[220px] bg-gradient-to-b from-[#F7F7F5] to-[#EFEFEA] overflow-hidden flex items-center justify-center p-3 sm:p-4 rounded-t-2xl">
+      <div className="relative aspect-[4/3] sm:aspect-square max-h-[180px] sm:max-h-[220px] bg-gradient-to-b from-[#F7F7F5] to-[#EFEFEA] dark:from-[#24272D] dark:to-[#1A1C1F] overflow-hidden flex items-center justify-center p-3 sm:p-4 rounded-t-2xl transition-colors">
         {/* Main Product Image with Smooth Luxury Hover Zoom & Fade */}
         <img
           src={product.main_image || "/logo.jpg"}
@@ -73,42 +73,42 @@ export function ProductCard({
 
         <div className="absolute top-2.5 left-2.5 flex flex-col gap-1 z-10">
           {Boolean(product.is_new_arrival) && (
-            <span className="bg-[#111214] text-[#F7F7F5] text-[9px] sm:text-[10px] font-bold uppercase tracking-widest px-2.5 py-0.5 rounded-full shadow-xs">
+            <span className="bg-[#111214] dark:bg-white text-[#F7F7F5] dark:text-[#111214] text-[9px] sm:text-[10px] font-bold uppercase tracking-widest px-2.5 py-0.5 rounded-full shadow-xs">
               {lang === "ar" ? "جديد" : "NEW"}
             </span>
           )}
           {hasSale && (
-            <span className="bg-[#292B2E] border border-[#BFC2C6]/40 text-white text-[9px] sm:text-[10px] font-bold uppercase tracking-widest px-2.5 py-0.5 rounded-full shadow-xs">
+            <span className="bg-[#292B2E] dark:bg-[#33373E] border border-[#BFC2C6]/40 text-white text-[9px] sm:text-[10px] font-bold uppercase tracking-widest px-2.5 py-0.5 rounded-full shadow-xs">
               {lang === "ar" ? "خصم" : "SALE"}
             </span>
           )}
         </div>
 
         {!inStock && (
-          <div className="absolute bottom-2.5 right-2.5 bg-[#111214]/90 text-[#BFC2C6] text-[9px] sm:text-[10px] font-semibold uppercase px-2.5 py-0.5 rounded-full">
+          <div className="absolute bottom-2.5 right-2.5 bg-[#111214]/90 dark:bg-black/90 text-[#BFC2C6] text-[9px] sm:text-[10px] font-semibold uppercase px-2.5 py-0.5 rounded-full">
             {lang === "ar" ? "نفد المخزون" : "OUT OF STOCK"}
           </div>
         )}
       </div>
 
-      <div className="p-3.5 sm:p-4 flex-1 flex flex-col justify-between gap-1.5 border-t border-[#E9EAEC] bg-white rounded-b-2xl">
+      <div className="p-3.5 sm:p-4 flex-1 flex flex-col justify-between gap-1.5 border-t border-[#E9EAEC] dark:border-[#2E3238] bg-white dark:bg-[#1A1C1F] rounded-b-2xl transition-colors">
         <div>
           {catName && (
-            <p className="text-[10px] uppercase tracking-wider text-neutralgray mb-0.5 line-clamp-1">
+            <p className="text-[10px] uppercase tracking-wider text-neutralgray dark:text-[#9EA3AA] mb-0.5 line-clamp-1">
               {catName}
             </p>
           )}
-          <h3 className="font-heading text-xs sm:text-sm font-bold text-jet group-hover:text-black transition-colors line-clamp-1">
+          <h3 className="font-heading text-xs sm:text-sm font-bold text-jet dark:text-white group-hover:text-black dark:group-hover:text-white transition-colors line-clamp-1">
             {name}
           </h3>
         </div>
 
         <div className="flex items-center gap-2 pt-0.5">
-          <span className="font-heading font-bold text-xs sm:text-sm text-jet">
+          <span className="font-heading font-bold text-xs sm:text-sm text-jet dark:text-white">
             {formatCurrency(displayPrice, lang)}
           </span>
           {hasSale && (
-            <span className="text-[10px] sm:text-xs text-neutralgray line-through">
+            <span className="text-[10px] sm:text-xs text-neutralgray dark:text-[#8E939C] line-through">
               {formatCurrency(Number(product.regular_price), lang)}
             </span>
           )}

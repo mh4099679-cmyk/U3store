@@ -229,11 +229,11 @@ export function ProductDetailClient({
 
         {/* Material & Craftsmanship */}
         {((lang === "ar" && product.material_ar) || product.material_en) && (
-          <div className="bg-[#FAFBFB] border border-silver/60 rounded-xl p-3 text-xs space-y-1">
-            <span className="font-bold uppercase tracking-wider text-jet">
+          <div className="bg-[#FAFBFB] dark:bg-[#1A1C1F] border border-silver/60 dark:border-[#2E3238] rounded-xl p-3 text-xs space-y-1 transition-colors">
+            <span className="font-bold uppercase tracking-wider text-jet dark:text-white">
               {lang === "ar" ? "الخامات وتفاصيل التصنيع:" : "Material & Details:"}
             </span>
-            <p className="text-neutralgray">
+            <p className="text-neutralgray dark:text-[#A7ABB1]">
               {lang === "ar" ? product.material_ar || product.material_en : product.material_en}
             </p>
           </div>
@@ -243,9 +243,9 @@ export function ProductDetailClient({
         {colors.length > 0 && (
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <label className="text-xs font-bold uppercase tracking-wider text-jet flex items-center gap-2">
+              <label className="text-xs font-bold uppercase tracking-wider text-jet dark:text-white flex items-center gap-2">
                 <span>{t(lang, "product.select_color")}:</span>
-                <span className="text-jet bg-neutral-100 border border-silver/60 px-2.5 py-0.5 rounded-md font-mono text-[11px] font-bold">
+                <span className="text-jet dark:text-white bg-neutral-100 dark:bg-[#2A2D32] border border-silver/60 dark:border-[#383C44] px-2.5 py-0.5 rounded-md font-mono text-[11px] font-bold">
                   {lang === "ar"
                     ? colors.find((c) => c.en === selectedColor)?.ar || selectedColor
                     : selectedColor}
@@ -275,10 +275,10 @@ export function ProductDetailClient({
                     }}
                     className={`group relative flex items-center gap-2.5 p-1.5 pe-3.5 rounded-full border transition-all duration-300 cursor-pointer ${
                       isSelected
-                        ? "border-jet bg-[#111214] text-white shadow-md ring-2 ring-jet ring-offset-2 scale-105"
+                        ? "border-jet dark:border-white bg-[#111214] dark:bg-white text-white dark:text-[#111214] shadow-md ring-2 ring-jet dark:ring-white ring-offset-2 ring-offset-white dark:ring-offset-[#111214] scale-105"
                         : colorSoldOut
-                        ? "border-silver/40 bg-neutral-100/70 text-neutral-400 opacity-50 cursor-not-allowed line-through"
-                        : "border-silver/80 bg-white text-jet hover:border-jet hover:shadow-xs hover:scale-[1.02]"
+                        ? "border-silver/40 dark:border-white/10 bg-neutral-100/70 dark:bg-white/5 text-neutral-400 opacity-50 cursor-not-allowed line-through"
+                        : "border-silver/80 dark:border-[#383C44] bg-white dark:bg-[#1E2024] text-jet dark:text-white hover:border-jet dark:hover:border-white hover:shadow-xs hover:scale-[1.02]"
                     }`}
                   >
                     {/* Visual Color Circle Swatch */}
@@ -359,17 +359,17 @@ export function ProductDetailClient({
                   }
                   className={`py-2.5 px-2 border text-xs font-bold transition-all flex flex-col items-center justify-center ${
                     isSoldOut
-                      ? "bg-black/5 text-neutralgray/60 border-silver/40 cursor-not-allowed opacity-60"
+                      ? "bg-black/5 dark:bg-white/5 text-neutralgray/60 dark:text-white/30 border-silver/40 dark:border-white/10 cursor-not-allowed opacity-60"
                       : isSelected
-                      ? "bg-[#111214] text-white border-[#111214] shadow-sm"
-                      : "bg-white text-jet border-silver hover:border-jet"
+                      ? "bg-[#111214] dark:bg-white text-white dark:text-[#111214] border-[#111214] dark:border-white shadow-sm"
+                      : "bg-white dark:bg-[#1E2024] text-jet dark:text-white border-silver dark:border-[#383C44] hover:border-jet dark:hover:border-white"
                   }`}
                 >
                   <span className={isSoldOut ? "line-through" : ""}>
                     {product.product_type === "CLOTHING" ? v.size : `EU ${v.size}`}
                   </span>
                   {isSoldOut && (
-                    <span className="text-[9px] uppercase tracking-wider font-semibold text-neutralgray mt-0.5">
+                    <span className="text-[9px] uppercase tracking-wider font-semibold text-neutralgray dark:text-neutral-400 mt-0.5">
                       {lang === "ar" ? "نفد" : "Sold Out"}
                     </span>
                   )}
@@ -381,11 +381,11 @@ export function ProductDetailClient({
 
         {/* Marketing-Driven Real-Time Stock Status */}
         {activeVariant && (
-          <div className="bg-white border border-[#E1E3E5] rounded-2xl p-4 shadow-xs u3-glow-interactive transition-all">
+          <div className="bg-white dark:bg-[#1A1C1F] border border-[#E1E3E5] dark:border-[#2E3238] rounded-2xl p-4 shadow-xs u3-glow-interactive transition-all">
             <div className="flex items-center justify-between gap-3 flex-wrap">
               <div className="flex items-center gap-2">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-neutralgray">{t(lang, "product.sku")}:</span>
-                <span className="font-mono font-bold text-xs bg-neutral-100 text-jet px-2 py-0.5 rounded-md border border-silver/50">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-neutralgray dark:text-[#A7ABB1]">{t(lang, "product.sku")}:</span>
+                <span className="font-mono font-bold text-xs bg-neutral-100 dark:bg-[#25282F] text-jet dark:text-white px-2 py-0.5 rounded-md border border-silver/50 dark:border-[#383C44]">
                   {activeVariant.sku}
                 </span>
               </div>
@@ -427,7 +427,7 @@ export function ProductDetailClient({
         {/* Quantity & Action Buttons */}
         <div className="space-y-3 pt-2">
           <div className="flex items-center gap-3">
-            <div className="flex items-center border border-silver bg-white">
+            <div className="flex items-center border border-silver dark:border-[#383C44] bg-white dark:bg-[#1A1C1F] text-jet dark:text-white">
               <button
                 type="button"
                 disabled={availableStock <= 0}
@@ -451,7 +451,7 @@ export function ProductDetailClient({
               type="button"
               disabled={adding || availableStock <= 0}
               onClick={() => handleAddToBag(false)}
-              className="flex-1 bg-[#111214] hover:bg-[#292B2E] disabled:bg-neutralgray/50 disabled:cursor-not-allowed text-white font-heading text-xs font-bold uppercase tracking-widest py-4 px-6 flex items-center justify-center gap-2 transition-colors"
+              className="flex-1 bg-[#111214] hover:bg-[#292B2E] dark:bg-white dark:hover:bg-[#E1E3E5] text-white dark:text-[#111214] disabled:bg-neutralgray/50 disabled:cursor-not-allowed font-heading text-xs font-bold uppercase tracking-widest py-4 px-6 flex items-center justify-center gap-2 transition-all shadow-md"
             >
               <ShoppingBag className="w-4 h-4" />
               <span>
@@ -469,7 +469,7 @@ export function ProductDetailClient({
               type="button"
               disabled={adding || availableStock <= 0}
               onClick={() => handleAddToBag(true)}
-              className="bg-[#292B2E] hover:bg-[#111214] disabled:bg-neutralgray/50 disabled:cursor-not-allowed text-white font-heading text-xs font-bold uppercase tracking-widest py-3.5 px-6 transition-colors"
+              className="bg-[#292B2E] hover:bg-[#111214] dark:bg-[#24272D] dark:hover:bg-[#2F333B] text-white disabled:bg-neutralgray/50 disabled:cursor-not-allowed font-heading text-xs font-bold uppercase tracking-widest py-3.5 px-6 transition-colors border border-transparent dark:border-[#383C44]"
             >
               {t(lang, "product.buy_now")}
             </button>
@@ -477,7 +477,7 @@ export function ProductDetailClient({
             <button
               type="button"
               onClick={toggleWishlist}
-              className="border border-jet bg-white hover:bg-[#111214] hover:text-white text-jet font-heading text-xs font-bold uppercase tracking-widest py-3.5 px-6 flex items-center justify-center gap-2 transition-colors"
+              className="border border-jet dark:border-white/40 bg-white dark:bg-[#1E2024] hover:bg-[#111214] dark:hover:bg-white text-jet dark:text-white dark:hover:text-[#111214] font-heading text-xs font-bold uppercase tracking-widest py-3.5 px-6 flex items-center justify-center gap-2 transition-colors"
             >
               <Heart className={`w-4 h-4 ${wishlisted ? "fill-current" : ""}`} />
               <span>

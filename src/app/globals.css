@@ -83,49 +83,110 @@ img, svg, video, canvas, audio, iframe, embed, object {
   letter-spacing: -0.02em;
 }
 
-/* Careful Dark Mode Surface & Input Adaptation */
+/* ========================================================
+   LUXURY DUAL-THEME ENGINE (LIGHT & DARK MODES)
+   Pristine streetwear contrast, razor-sharp typography,
+   zero washed-out text, and vibrant focus on products
+   ======================================================== */
+
 html.dark body {
   background-color: #111214;
   color: #F5F5F5;
 }
 
+/* Background surfaces in dark mode */
 html.dark .bg-offwhite {
-  background-color: #111214 !important;
+  background-color: #111214;
 }
 
-html.dark .bg-white {
-  background-color: #22252A !important;
-  color: #F5F5F5;
+/* Card surfaces in dark mode: rich dark charcoal with clean borders */
+html.dark aside.bg-white,
+html.dark div.bg-white:not([class*="rounded-full"]):not([class*="btn"]):not([class*="px-8"]):not([class*="px-7"]):not([class*="px-6"]),
+html.dark section.bg-white {
+  background-color: #1A1C1F;
+  border-color: #2E3238;
 }
 
+/* Text readability in dark mode */
 html.dark .text-jet {
-  color: #F5F5F5 !important;
+  color: #FFFFFF !important;
 }
 
 html.dark .text-neutralgray {
-  color: #A7ABB1 !important;
+  color: #9EA3AA !important;
 }
 
+html.dark .text-darkgray {
+  color: #D1D5DB !important;
+}
+
+/* Badges, tags, and small pills in dark mode */
+html.dark .bg-neutral-100 {
+  background-color: #262930 !important;
+  color: #FFFFFF !important;
+  border-color: #383C44 !important;
+}
+
+html.dark .text-neutral-700 {
+  color: #E1E3E5 !important;
+}
+
+html.dark .text-neutral-600 {
+  color: #BFC2C6 !important;
+}
+
+html.dark .text-neutral-500 {
+  color: #9EA3AA !important;
+}
+
+/* Crisp high-contrast borders in dark mode */
+html.dark .border-black\/5,
 html.dark .border-black\/10,
 html.dark .border-black\/15,
-html.dark .border-black\/5,
+html.dark .border-silver,
 html.dark .border-silver\/40,
 html.dark .border-silver\/50,
-html.dark .border-silver\/60 {
-  border-color: #30343A !important;
+html.dark .border-silver\/60,
+html.dark .border-silver\/80,
+html.dark .border-\[\#E1E3E5\],
+html.dark .border-\[\#E9EAEC\] {
+  border-color: #2E3238 !important;
 }
 
+/* Inputs, textareas, selects */
 html.dark input:not([type="checkbox"]):not([type="radio"]),
 html.dark select,
 html.dark textarea {
-  background-color: #1A1C1F !important;
-  color: #F5F5F5 !important;
-  border-color: #30343A !important;
+  background-color: #16181B !important;
+  color: #FFFFFF !important;
+  border-color: #383C44 !important;
 }
 
 html.dark input::placeholder,
 html.dark textarea::placeholder {
-  color: #73777D !important;
+  color: #6C727D !important;
+}
+
+/* Primary white action buttons (Keep bright stark white for luxury streetwear contrast) */
+html.dark a[class*="bg-white"],
+html.dark button[class*="bg-white"] {
+  background-color: #FFFFFF;
+  color: #111214;
+}
+
+html.dark a[class*="bg-white"]:hover,
+html.dark button[class*="bg-white"]:hover {
+  background-color: #E1E3E5;
+  color: #111214;
+}
+
+/* Secondary outline buttons and links */
+html.dark .u3-link-underline {
+  color: #FFFFFF;
+}
+
+html.dark .u3-link-underline:hover {
+  color: #E1E3E5;
 }
 
 /* Continuous Seamless Marquee Keyframes */

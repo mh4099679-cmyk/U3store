@@ -72,7 +72,7 @@ export async function StoreShell({ children }: { children: React.ReactNode }) {
   const totalBagCount = cart.items.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
-    <div className="min-h-screen flex flex-col bg-offwhite text-jet">
+    <div className="min-h-screen flex flex-col bg-[#F7F7F5] dark:bg-[#111214] text-[#111214] dark:text-[#F5F5F5] transition-colors duration-200">
       <SplashScreen />
       <StoreHeader
         lang={lang}
