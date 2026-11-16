@@ -1587,7 +1587,7 @@ export function AdminPortalClient({
         </aside>
 
         {/* Main Workspace */}
-        <main className="flex-1 p-3 sm:p-6 lg:p-8 pb-24 lg:pb-8 overflow-x-hidden max-w-7xl mx-auto w-full space-y-6">
+        <main className="flex-1 p-3 sm:p-6 lg:p-8 pb-24 lg:pb-8 overflow-x-hidden max-w-7xl 2xl:max-w-[1600px] mx-auto w-full space-y-6">
           {/* Elegant Top Context Bar with Smooth Segmented Control */}
           <div className="bg-white border border-silver/60 p-4 rounded-2xl shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div className="flex items-center gap-3">
@@ -1608,7 +1608,7 @@ export function AdminPortalClient({
 
             {/* Clean Segmented Sub-Navigation Pills (if module has subsections) */}
             {currentModule.subsections.length > 0 && (
-              <div className="bg-[#F0F1F3] p-1 rounded-xl flex items-center gap-1 border border-silver/30 self-start md:self-auto w-full md:w-auto overflow-x-auto max-w-full">
+              <div className="bg-[#F0F1F3] p-1 rounded-xl flex items-center gap-1 border border-silver/30 self-start md:self-auto w-full md:w-auto overflow-x-auto max-w-full scrollbar-none flex-nowrap">
                 {currentModule.subsections.map((sub: any) => {
                   const isSubActive = activeSection === sub.id;
                   const SubIcon = sub.icon;
@@ -1617,13 +1617,13 @@ export function AdminPortalClient({
                       key={sub.id}
                       type="button"
                       onClick={() => setActiveSection(sub.id)}
-                      className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-heading font-bold uppercase tracking-wider rounded-lg transition-all cursor-pointer ${
+                      className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-heading font-bold uppercase tracking-wider rounded-lg transition-all cursor-pointer whitespace-nowrap shrink-0 ${
                         isSubActive
                           ? "bg-white text-[#111214] shadow-xs font-black border border-silver/40"
                           : "text-[#73777D] hover:text-[#111214] hover:bg-white/60"
                       }`}
                     >
-                      {SubIcon && <SubIcon className={`w-3.5 h-3.5 ${isSubActive ? "text-jet" : "text-neutralgray"}`} />}
+                      {SubIcon && <SubIcon className={`w-3.5 h-3.5 shrink-0 ${isSubActive ? "text-jet" : "text-neutralgray"}`} />}
                       <span>{lang === "ar" ? sub.ar : sub.en}</span>
                     </button>
                   );

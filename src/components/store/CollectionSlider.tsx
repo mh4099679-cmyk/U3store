@@ -203,7 +203,7 @@ export function CollectionSlider({
           {displayProducts.map((p) => (
             <div
               key={p.id}
-              className="w-[52vw] max-w-[210px] sm:w-[230px] md:w-[245px] shrink-0 snap-start"
+              className="w-[58vw] min-w-[190px] max-w-[230px] sm:w-[235px] sm:max-w-none md:w-[250px] lg:w-[265px] xl:w-[280px] 2xl:w-[300px] shrink-0 snap-start"
             >
               <ProductCard product={p} lang={lang} />
             </div>

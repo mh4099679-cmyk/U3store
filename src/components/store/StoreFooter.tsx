@@ -233,10 +233,10 @@ export function StoreFooter({
       dir={lang === "ar" ? "rtl" : "ltr"}
     >
       {/* ======================================================== */}
-      {/* 1. MOBILE STREAMLINED COMPACT LAYOUT (block lg:hidden) */}
-      {/* Sleek, Fast, Luxury: Takes ~320px instead of ~800px on phones */}
+      {/* 1. MOBILE & TABLET STREAMLINED COMPACT LAYOUT (block lg:hidden) */}
+      {/* Sleek, Fast, Luxury: Takes ~320px on phones, centered max-w-3xl on tablets */}
       {/* ======================================================== */}
-      <div className="block lg:hidden px-4 py-8 space-y-6">
+      <div className="block lg:hidden px-4 sm:px-6 py-8 sm:py-12 space-y-6 max-w-2xl sm:max-w-3xl mx-auto">
         {/* Brand Row + Social Media on the same line */}
         <div className="flex items-center justify-between gap-3 border-b border-[#30343A]/60 pb-5">
           <div className="flex items-center gap-2.5">
@@ -431,7 +431,7 @@ export function StoreFooter({
       {/* ======================================================== */}
       {/* 2. DESKTOP FULL 4-COLUMN LUXURY LAYOUT (hidden lg:block) */}
       {/* ======================================================== */}
-      <div className="hidden lg:block max-w-7xl mx-auto px-6 lg:px-8 py-16">
+      <div className="hidden lg:block max-w-7xl 2xl:max-w-[1536px] mx-auto px-6 lg:px-8 py-16">
         <div className="grid grid-cols-12 gap-10">
           {/* COLUMN 1: BRAND IDENTITY, NEWSLETTER & SOCIAL MEDIA (col-span-4) */}
           <div className="col-span-4 space-y-6">

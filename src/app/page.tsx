@@ -205,14 +205,14 @@ export default async function HomePage() {
         </div>
 
         {/* Hero Content: 2-Columns on Desktop (lg:flex-row), Centered on Mobile (flex-col) */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-24 lg:py-28 flex flex-col lg:flex-row items-center justify-between gap-8 sm:gap-12 u3-reveal">
+        <div className="relative z-10 max-w-7xl 2xl:max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-24 lg:py-28 2xl:py-36 flex flex-col lg:flex-row items-center justify-between gap-8 sm:gap-12 u3-reveal">
           {/* Text & Buttons Column */}
-          <div className="max-w-2xl space-y-5 sm:space-y-6 text-center lg:text-start flex flex-col items-center lg:items-start">
-            <h1 className="font-heading text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight drop-shadow-md">
+          <div className="max-w-2xl 2xl:max-w-3xl space-y-5 sm:space-y-6 text-center lg:text-start flex flex-col items-center lg:items-start">
+            <h1 className="font-heading text-3xl sm:text-5xl lg:text-6xl 2xl:text-7xl font-extrabold tracking-tight text-white leading-tight drop-shadow-md">
               {heroHeadline}
             </h1>
 
-            <p className="text-base sm:text-xl text-[#BFC2C6] font-light leading-relaxed">
+            <p className="text-base sm:text-xl 2xl:text-2xl text-[#BFC2C6] font-light leading-relaxed">
               {heroSubtitle}
             </p>
 
@@ -242,12 +242,12 @@ export default async function HomePage() {
 
           {/* DESKTOP ONLY (lg:flex): 3D Metallic Emblem Side-by-Side as in Screenshot */}
           <div className="hidden lg:flex flex-col items-center justify-center u3-floating shrink-0">
-            <div className="relative p-5 sm:p-6 lg:p-7 rounded-full bg-gradient-to-tr from-[#1A1C1F] via-[#111214] to-[#292B2E] border-2 border-[#BFC2C6]/40 shadow-[0_20px_60px_rgba(0,0,0,0.85)] group hover:border-white hover:shadow-[0_25px_70px_rgba(255,255,255,0.12)] transition-all duration-700">
+            <div className="relative p-5 sm:p-6 lg:p-7 2xl:p-9 rounded-full bg-gradient-to-tr from-[#1A1C1F] via-[#111214] to-[#292B2E] border-2 border-[#BFC2C6]/40 shadow-[0_20px_60px_rgba(0,0,0,0.85)] group hover:border-white hover:shadow-[0_25px_70px_rgba(255,255,255,0.12)] transition-all duration-700">
               <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-white/10 to-transparent blur-md pointer-events-none" />
               <img
                 src="/logo.jpg"
                 alt="U3 STORE Official Emblem"
-                className="w-48 h-48 lg:w-64 lg:h-64 rounded-full object-contain relative z-10 transition-transform duration-700 group-hover:scale-105"
+                className="w-48 h-48 lg:w-64 lg:h-64 2xl:w-76 2xl:h-76 rounded-full object-contain relative z-10 transition-transform duration-700 group-hover:scale-105"
               />
             </div>
           </div>
@@ -256,7 +256,7 @@ export default async function HomePage() {
 
       {/* 4. Benefits Strip with Sleek Curved Panels (Restored exact design from screenshot) */}
       <section className="bg-white dark:bg-[#16181B] border-y border-[#E1E3E5] dark:border-[#2A2D32] py-5 sm:py-8 transition-colors">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-5">
+        <div className="max-w-7xl 2xl:max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-5">
           <div className="flex items-center gap-3.5 p-4 sm:p-5 border border-[#E9EAEC] dark:border-[#2E3238] bg-gradient-to-br from-[#F7F7F5] to-white dark:from-[#1E2024] dark:to-[#181A1D] hover:to-[#F7F7F5] dark:hover:to-[#22252A] rounded-2xl shadow-2xs hover:shadow-md transition-all duration-300">
             <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-[#111214] dark:bg-white text-white dark:text-[#111214] flex items-center justify-center shrink-0 shadow-sm">
               <Truck className="w-5 h-5 text-[#BFC2C6] dark:text-[#111214]" />
@@ -308,7 +308,7 @@ export default async function HomePage() {
       </section>
 
       {/* Main Content Area */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 space-y-16">
+      <div className="max-w-7xl 2xl:max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 space-y-16">
         
         {/* ======================================================== */}
         {/* 5. SHOP BY CATEGORY (ONLY SHOWN WHEN BOTH DEPARTMENTS ARE LIVE) */}

@@ -106,7 +106,7 @@ export function StoreHeader({
       {/* Top Announcement Bar */}
       {announcementEnabled && (
         <div className="bg-[#1A1C1F] text-[#E1E3E5] text-[10px] sm:text-[11px] py-1 sm:py-1.5 px-3 sm:px-4 border-b border-[#292B2E]">
-          <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
+          <div className="max-w-7xl 2xl:max-w-[1536px] mx-auto flex items-center justify-between gap-2">
             <div className="flex items-center gap-2 truncate">
               <ShieldCheck className="w-3.5 h-3.5 text-[#BFC2C6] shrink-0" />
               <span className="tracking-wide truncate">
@@ -129,9 +129,9 @@ export function StoreHeader({
       )}
 
       {/* Main Header Navigation */}
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-3 sm:gap-4">
+      <div className="max-w-7xl 2xl:max-w-[1536px] mx-auto px-3 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-3 sm:gap-4">
         {/* Left: Brand Official Logo */}
-        <div className="flex items-center gap-2 sm:gap-3">
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           <button
             ref={toggleBtnRef}
             type="button"
@@ -142,7 +142,7 @@ export function StoreHeader({
             {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
 
-          <Link href="/" className="flex items-center gap-2.5 sm:gap-3 group">
+          <Link href="/" className="flex items-center gap-2.5 sm:gap-3 group shrink-0">
             <img
               src="/logo.png"
               alt="U3 STORE Official Logo"
@@ -183,7 +183,7 @@ export function StoreHeader({
         </nav>
 
         {/* Right: Theme Switcher (Light/Dark) + Language Switcher (EN/AR) + Icons */}
-        <div className="flex items-center gap-1 sm:gap-2.5">
+        <div className="flex items-center gap-1 sm:gap-2.5 shrink-0">
           <div className="hidden sm:block">
             <ThemeSwitcher scope="storefront" lang={lang} />
           </div>
