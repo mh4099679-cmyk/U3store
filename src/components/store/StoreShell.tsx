@@ -85,7 +85,12 @@ export async function StoreShell({ children }: { children: React.ReactNode }) {
         announcementTextEn={appearance?.announcement_en}
         announcementTextAr={appearance?.announcement_ar}
       />
-      <MarqueeStrip lang={lang} config={marqueeSettings} campaign={saleCampaign} />
+      <MarqueeStrip
+        lang={lang}
+        config={marqueeSettings}
+        campaign={saleCampaign}
+        visibleCategories={settings?.visible_categories || "BOTH"}
+      />
       <main className="flex-1 pb-16 sm:pb-0">{children}</main>
       <StoreFooter
         lang={lang}

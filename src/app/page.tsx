@@ -108,6 +108,58 @@ export default async function HomePage() {
   const isRtl = lang === "ar";
   const shopByCategoryEnabled = settings?.shop_by_category_enabled !== 0;
 
+  // Dynamic high-converting luxury marketing copy tailored to store category mode (SHOES_ONLY vs CLOTHING_ONLY vs BOTH)
+  let heroHeadline = isRtl ? "فخامة في كل خطوة." : "STEP INTO LUXURY.";
+  let heroSubtitle = isRtl
+    ? "سنيكرز وأحذية حصرية بتصاميم استثنائية وأداء يجمع بين الأناقة والراحة المطلقة."
+    : "Exclusive sneakers & premium footwear engineered for bold presence and supreme comfort.";
+  let heroButtonText = isRtl ? "تسوق الأحذية" : "SHOP FOOTWEAR";
+  let heroButtonLink = "/shoes";
+
+  if (visibleCategories === "BOTH") {
+    heroHeadline = isRtl ? "اخطُ في مسارك الخاص." : "STEP INTO YOUR OWN LANE.";
+    heroSubtitle = isRtl
+      ? "أحذية فاخرة وملابس ستريت وير عصرية تعبّر عن هويتك المتفردة وأسلوبك الاستثنائي."
+      : "Premium footwear & modern luxury streetwear crafted for distinct individuality.";
+    heroButtonText = isRtl ? "تسوق المجموعة" : "SHOP COLLECTION";
+    heroButtonLink = "/shop";
+  } else if (visibleCategories === "CLOTHING_ONLY") {
+    heroHeadline = isRtl ? "أناقة تعبّر عن حضورك." : "WEAR YOUR IDENTITY.";
+    heroSubtitle = isRtl
+      ? "ملابس ستريت وير عصرية وتصاميم فاخرة صُممت لتبرز تفرد أسلوبك في كل إطلالة."
+      : "Modern luxury streetwear & premium apparel designed for distinctive street presence.";
+    heroButtonText = isRtl ? "تسوق الملابس" : "SHOP CLOTHING";
+    heroButtonLink = "/clothing";
+  }
+
+  // Allow custom CMS headline/subtitle if admin explicitly customized them beyond initial defaults
+  const customHeadline = isRtl ? heroSection.subtitle_ar : heroSection.subtitle_en;
+  if (
+    customHeadline &&
+    customHeadline.trim() !== "" &&
+    customHeadline !== "اخطُ في مسارك الخاص." &&
+    customHeadline !== "STEP INTO YOUR OWN LANE."
+  ) {
+    heroHeadline = customHeadline;
+  }
+
+  const customSubtitle = isRtl ? heroSection.description_ar : heroSection.description_en;
+  if (
+    customSubtitle &&
+    customSubtitle.trim() !== "" &&
+    !customSubtitle.startsWith("اكتشف المجموعة") &&
+    !customSubtitle.startsWith("DISCOVER THE COLLECTION")
+  ) {
+    heroSubtitle = customSubtitle;
+  }
+
+  if (heroSection.button_text_ar && heroSection.button_text_en && heroSection.button_text_en !== "SHOP NOW") {
+    heroButtonText = isRtl ? heroSection.button_text_ar : heroSection.button_text_en;
+  }
+  if (heroSection.button_link && heroSection.button_link !== "/shop") {
+    heroButtonLink = heroSection.button_link;
+  }
+
   return (
     <StoreShell>
       {/* Optional Live Sale Countdown Banner */}
@@ -144,19 +196,19 @@ export default async function HomePage() {
           {/* Text & Buttons Column */}
           <div className="max-w-2xl space-y-5 sm:space-y-6 text-center lg:text-start flex flex-col items-center lg:items-start">
             <h1 className="font-heading text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight drop-shadow-md">
-              {isRtl ? "اخطُ في مسارك الخاص." : "STEP INTO YOUR OWN LANE."}
+              {heroHeadline}
             </h1>
 
             <p className="text-base sm:text-xl text-[#BFC2C6] font-light leading-relaxed">
-              {isRtl ? "أحذية فاخرة وملابس ستريت وير عصرية." : "Premium footwear & modern streetwear."}
+              {heroSubtitle}
             </p>
 
             <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center justify-center lg:justify-start gap-3 sm:gap-4 w-full sm:w-auto">
               <MagneticButton
-                href={heroSection.button_link || "/shop"}
+                href={heroButtonLink}
                 className="group bg-white hover:bg-[#E1E3E5] text-[#111214] font-heading font-bold text-xs sm:text-sm uppercase tracking-widest px-8 py-3.5 sm:py-4 inline-flex items-center justify-center gap-3 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 w-full sm:w-auto"
               >
-                <span>{isRtl ? "تسوق المجموعة" : "SHOP COLLECTION"}</span>
+                <span>{heroButtonText}</span>
                 <ArrowRight
                   className={`w-4 h-4 transition-transform duration-200 ${
                     isRtl

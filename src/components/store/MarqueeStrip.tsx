@@ -29,25 +29,37 @@ export function MarqueeStrip({
   lang,
   config,
   campaign,
+  visibleCategories = "BOTH",
 }: {
   lang: Language;
   config?: MarqueeConfig | null;
   campaign?: CampaignConfig | null;
+  visibleCategories?: string;
 }) {
   if (config && config.is_enabled === 0) return null;
+
+  let defaultFootwearEn = "PREMIUM FOOTWEAR & STREETWEAR";
+  let defaultFootwearAr = "أحذية وملابس فاخرة";
+  if (visibleCategories === "SHOES_ONLY") {
+    defaultFootwearEn = "PREMIUM FOOTWEAR";
+    defaultFootwearAr = "أحذية فاخرة";
+  } else if (visibleCategories === "CLOTHING_ONLY") {
+    defaultFootwearEn = "LUXURY STREETWEAR";
+    defaultFootwearAr = "ملابس ستريت وير فاخرة";
+  }
 
   let baseSegmentsEn = [
     "U3 STORE",
     "LIVE YOURS",
     "NEW ARRIVALS",
-    "PREMIUM FOOTWEAR",
+    defaultFootwearEn,
     "DISCOVER THE COLLECTION",
   ];
   let baseSegmentsAr = [
     "U3 STORE",
     "LIVE YOURS",
     "وصل حديثاً",
-    "أحذية فاخرة",
+    defaultFootwearAr,
     "اكتشف المجموعة",
   ];
 
