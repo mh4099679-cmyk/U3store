@@ -70,6 +70,8 @@ import {
   RefreshCw,
   TrendingUp,
   Copy,
+  Save,
+  Edit,
 } from "lucide-react";
 import { Language, formatCurrency } from "@/lib/i18n/dictionaries";
 import { matchesBilingualSearch, STANDARD_COLORS, isColorLight } from "@/lib/search";
@@ -341,6 +343,32 @@ export function AdminPortalClient({
   const [trKey, setTrKey] = useState("");
   const [trEn, setTrEn] = useState("");
   const [trAr, setTrAr] = useState("");
+
+  // Hero Marketing Copy Customizer State
+  const [heroCopyExpanded, setHeroCopyExpanded] = useState(false);
+  const [heroCopyActiveTab, setHeroCopyActiveTab] = useState<"BOTH" | "SHOES_ONLY" | "CLOTHING_ONLY">("BOTH");
+  const [heroCopySaving, setHeroCopySaving] = useState(false);
+
+  const [heroShoesHeadlineEn, setHeroShoesHeadlineEn] = useState("STEP INTO LUXURY.");
+  const [heroShoesHeadlineAr, setHeroShoesHeadlineAr] = useState("فخامة في كل خطوة.");
+  const [heroShoesSubtitleEn, setHeroShoesSubtitleEn] = useState("Exclusive sneakers & premium footwear engineered for bold presence and supreme comfort.");
+  const [heroShoesSubtitleAr, setHeroShoesSubtitleAr] = useState("سنيكرز وأحذية حصرية بتصاميم استثنائية وأداء يجمع بين الأناقة والراحة المطلقة.");
+  const [heroShoesBtnTextEn, setHeroShoesBtnTextEn] = useState("SHOP FOOTWEAR");
+  const [heroShoesBtnTextAr, setHeroShoesBtnTextAr] = useState("تسوق الأحذية");
+
+  const [heroBothHeadlineEn, setHeroBothHeadlineEn] = useState("STEP INTO YOUR OWN LANE.");
+  const [heroBothHeadlineAr, setHeroBothHeadlineAr] = useState("اخطُ في مسارك الخاص.");
+  const [heroBothSubtitleEn, setHeroBothSubtitleEn] = useState("Premium footwear & modern luxury streetwear crafted for distinct individuality.");
+  const [heroBothSubtitleAr, setHeroBothSubtitleAr] = useState("أحذية فاخرة وملابس ستريت وير عصرية تعبّر عن هويتك المتفردة وأسلوبك الاستثنائي.");
+  const [heroBothBtnTextEn, setHeroBothBtnTextEn] = useState("SHOP COLLECTION");
+  const [heroBothBtnTextAr, setHeroBothBtnTextAr] = useState("تسوق المجموعة");
+
+  const [heroClothingHeadlineEn, setHeroClothingHeadlineEn] = useState("WEAR YOUR IDENTITY.");
+  const [heroClothingHeadlineAr, setHeroClothingHeadlineAr] = useState("أناقة تعبّر عن حضورك.");
+  const [heroClothingSubtitleEn, setHeroClothingSubtitleEn] = useState("Modern luxury streetwear & premium apparel designed for distinctive street presence.");
+  const [heroClothingSubtitleAr, setHeroClothingSubtitleAr] = useState("ملابس ستريت وير عصرية وتصاميم فاخرة صُممت لتبرز تفرد أسلوبك في كل إطلالة.");
+  const [heroClothingBtnTextEn, setHeroClothingBtnTextEn] = useState("SHOP CLOTHING");
+  const [heroClothingBtnTextAr, setHeroClothingBtnTextAr] = useState("تسوق الملابس");
 
   function showNotification(message: string, type: "success" | "error" | "info" = "success") {
     setToast({ message, type });
@@ -656,6 +684,102 @@ export function AdminPortalClient({
       }
     };
   }, [admin, lang, playNewOrderChime]);
+
+  // Synchronize Hero Marketing Copy state from cmsData.settings
+  useEffect(() => {
+    if (cmsData?.settings) {
+      const s = cmsData.settings;
+      if (s.hero_shoes_headline_en) setHeroShoesHeadlineEn(s.hero_shoes_headline_en);
+      if (s.hero_shoes_headline_ar) setHeroShoesHeadlineAr(s.hero_shoes_headline_ar);
+      if (s.hero_shoes_subtitle_en) setHeroShoesSubtitleEn(s.hero_shoes_subtitle_en);
+      if (s.hero_shoes_subtitle_ar) setHeroShoesSubtitleAr(s.hero_shoes_subtitle_ar);
+      if (s.hero_shoes_btn_text_en) setHeroShoesBtnTextEn(s.hero_shoes_btn_text_en);
+      if (s.hero_shoes_btn_text_ar) setHeroShoesBtnTextAr(s.hero_shoes_btn_text_ar);
+
+      if (s.hero_both_headline_en) setHeroBothHeadlineEn(s.hero_both_headline_en);
+      if (s.hero_both_headline_ar) setHeroBothHeadlineAr(s.hero_both_headline_ar);
+      if (s.hero_both_subtitle_en) setHeroBothSubtitleEn(s.hero_both_subtitle_en);
+      if (s.hero_both_subtitle_ar) setHeroBothSubtitleAr(s.hero_both_subtitle_ar);
+      if (s.hero_both_btn_text_en) setHeroBothBtnTextEn(s.hero_both_btn_text_en);
+      if (s.hero_both_btn_text_ar) setHeroBothBtnTextAr(s.hero_both_btn_text_ar);
+
+      if (s.hero_clothing_headline_en) setHeroClothingHeadlineEn(s.hero_clothing_headline_en);
+      if (s.hero_clothing_headline_ar) setHeroClothingHeadlineAr(s.hero_clothing_headline_ar);
+      if (s.hero_clothing_subtitle_en) setHeroClothingSubtitleEn(s.hero_clothing_subtitle_en);
+      if (s.hero_clothing_subtitle_ar) setHeroClothingSubtitleAr(s.hero_clothing_subtitle_ar);
+      if (s.hero_clothing_btn_text_en) setHeroClothingBtnTextEn(s.hero_clothing_btn_text_en);
+      if (s.hero_clothing_btn_text_ar) setHeroClothingBtnTextAr(s.hero_clothing_btn_text_ar);
+    }
+  }, [cmsData?.settings]);
+
+  async function handleSaveHeroCopy() {
+    setHeroCopySaving(true);
+    try {
+      const res = await postAdminAction(
+        {
+          action: "save_store_settings",
+          heroShoesHeadlineEn,
+          heroShoesHeadlineAr,
+          heroShoesSubtitleEn,
+          heroShoesSubtitleAr,
+          heroShoesBtnTextEn,
+          heroShoesBtnTextAr,
+          heroBothHeadlineEn,
+          heroBothHeadlineAr,
+          heroBothSubtitleEn,
+          heroBothSubtitleAr,
+          heroBothBtnTextEn,
+          heroBothBtnTextAr,
+          heroClothingHeadlineEn,
+          heroClothingHeadlineAr,
+          heroClothingSubtitleEn,
+          heroClothingSubtitleAr,
+          heroClothingBtnTextEn,
+          heroClothingBtnTextAr,
+        },
+        lang === "ar" ? "تم حفظ وتطبيق العبارات التسويقية للواجهة بنجاح!" : "Hero marketing copy saved and applied successfully!"
+      );
+      if (res?.ok) {
+        setCmsData((prev: any) =>
+          prev
+            ? {
+                ...prev,
+                settings: {
+                  ...prev.settings,
+                  hero_shoes_headline_en: heroShoesHeadlineEn,
+                  hero_shoes_headline_ar: heroShoesHeadlineAr,
+                  hero_shoes_subtitle_en: heroShoesSubtitleEn,
+                  hero_shoes_subtitle_ar: heroShoesSubtitleAr,
+                  hero_shoes_btn_text_en: heroShoesBtnTextEn,
+                  hero_shoes_btn_text_ar: heroShoesBtnTextAr,
+                  hero_both_headline_en: heroBothHeadlineEn,
+                  hero_both_headline_ar: heroBothHeadlineAr,
+                  hero_both_subtitle_en: heroBothSubtitleEn,
+                  hero_both_subtitle_ar: heroBothSubtitleAr,
+                  hero_both_btn_text_en: heroBothBtnTextEn,
+                  hero_both_btn_text_ar: heroBothBtnTextAr,
+                  hero_clothing_headline_en: heroClothingHeadlineEn,
+                  hero_clothing_headline_ar: heroClothingHeadlineAr,
+                  hero_clothing_subtitle_en: heroClothingSubtitleEn,
+                  hero_clothing_subtitle_ar: heroClothingSubtitleAr,
+                  hero_clothing_btn_text_en: heroClothingBtnTextEn,
+                  hero_clothing_btn_text_ar: heroClothingBtnTextAr,
+                },
+              }
+            : prev
+        );
+        try {
+          if (typeof window !== "undefined" && "BroadcastChannel" in window) {
+            const bc = new BroadcastChannel("u3_admin_sync");
+            bc.postMessage({ type: "HERO_COPY_CHANGED", timestamp: Date.now() });
+            bc.close();
+          }
+        } catch {}
+      }
+    } finally {
+      setHeroCopySaving(false);
+    }
+  }
 
   async function switchAdminLanguage(nextLang: Language) {
     setLang(nextLang);
@@ -1581,6 +1705,393 @@ export function AdminPortalClient({
                     );
                   })}
                 </div>
+              </div>
+
+              {/* Dynamic Hero Marketing Copy Customizer (Shoes / Clothing / Both) */}
+              <div className="bg-white border border-silver/60 rounded-3xl p-5 sm:p-6 shadow-sm space-y-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-silver/40 pb-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-2xl bg-jet text-white flex items-center justify-center shadow-xs">
+                      <Sparkles className="w-5 h-5 text-amber-400" />
+                    </div>
+                    <div>
+                      <h3 className="font-heading font-bold text-sm text-jet flex items-center gap-2">
+                        <span>{lang === "ar" ? "تعديل الجمل التسويقية للواجهة (HERO MARKETING COPY)" : "HERO MARKETING COPY CUSTOMIZER"}</span>
+                        <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-neutral-100 text-neutral-700 font-bold border border-silver/40">
+                          {heroCopyActiveTab === "BOTH" ? (lang === "ar" ? "الاثنين معاً" : "Both") : heroCopyActiveTab === "SHOES_ONLY" ? (lang === "ar" ? "الأحذية" : "Shoes") : (lang === "ar" ? "الملابس" : "Clothing")}
+                        </span>
+                      </h3>
+                      <p className="text-[11px] text-neutralgray">
+                        {lang === "ar"
+                          ? "تحكم كامل في العنوان الرئيسي، والوصف التسويقي، ونص الزرار (بالعربي والإنجليزي) لكل وضع."
+                          : "Fully customize headlines, subtitles, and CTA button text (AR & EN) for each store visibility mode."}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setHeroCopyExpanded(!heroCopyExpanded)}
+                      className="px-4 py-2 rounded-xl text-xs font-bold bg-[#F9FAFB] hover:bg-neutral-100 text-jet border border-silver/60 flex items-center gap-2 transition-all cursor-pointer shadow-2xs"
+                    >
+                      <Edit className="w-3.5 h-3.5 text-neutralgray" />
+                      <span>{heroCopyExpanded ? (lang === "ar" ? "إخفاء لوحة التعديل" : "Collapse Editor") : (lang === "ar" ? "تعديل الجمل التسويقية" : "Edit Marketing Copy")}</span>
+                      <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${heroCopyExpanded ? "rotate-180" : ""}`} />
+                    </button>
+                  </div>
+                </div>
+
+                {/* Sub-Tabs for the 3 Categories (Both, Shoes Only, Clothing Only) */}
+                <div className="flex flex-wrap items-center gap-2 border-b border-silver/30 pb-3">
+                  {[
+                    { id: "BOTH" as const, labelAr: "⚡ وضع الاثنين معاً (الأحذية والملابس)", labelEn: "⚡ Both (Shoes & Clothing)" },
+                    { id: "SHOES_ONLY" as const, labelAr: "👟 وضع الأحذية فقط", labelEn: "👟 Shoes Only" },
+                    { id: "CLOTHING_ONLY" as const, labelAr: "👕 وضع الملابس فقط", labelEn: "👕 Clothing Only" },
+                  ].map((tb) => {
+                    const active = heroCopyActiveTab === tb.id;
+                    return (
+                      <button
+                        key={tb.id}
+                        type="button"
+                        onClick={() => {
+                          setHeroCopyActiveTab(tb.id);
+                          if (!heroCopyExpanded) setHeroCopyExpanded(true);
+                        }}
+                        className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer border ${
+                          active
+                            ? "bg-jet text-white border-jet shadow-sm ring-1 ring-jet"
+                            : "bg-[#FAFAFA] text-neutralgray border-silver/50 hover:bg-white hover:text-jet"
+                        }`}
+                      >
+                        {lang === "ar" ? tb.labelAr : tb.labelEn}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Editor Fields when Expanded */}
+                {heroCopyExpanded && (
+                  <div className="space-y-6 pt-1">
+                    {/* Live Preview Box */}
+                    <div className="p-4 sm:p-5 rounded-2xl bg-[#111214] text-white border border-white/10 shadow-md">
+                      <div className="flex items-center justify-between mb-3 border-b border-white/10 pb-2.5">
+                        <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-[#BFC2C6] flex items-center gap-1.5">
+                          <Eye className="w-3.5 h-3.5 text-emerald-400" />
+                          <span>{lang === "ar" ? "معاينة مباشرة كما تظهر للعميل في الهيرو:" : "Live Storefront Hero Preview:"}</span>
+                        </span>
+                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-white/10 text-emerald-300">
+                          {heroCopyActiveTab}
+                        </span>
+                      </div>
+                      <div className="space-y-2">
+                        <h4 className="font-heading text-lg sm:text-2xl font-extrabold text-white">
+                          {lang === "ar"
+                            ? (heroCopyActiveTab === "BOTH" ? heroBothHeadlineAr : heroCopyActiveTab === "SHOES_ONLY" ? heroShoesHeadlineAr : heroClothingHeadlineAr)
+                            : (heroCopyActiveTab === "BOTH" ? heroBothHeadlineEn : heroCopyActiveTab === "SHOES_ONLY" ? heroShoesHeadlineEn : heroClothingHeadlineEn)}
+                        </h4>
+                        <p className="text-xs sm:text-sm text-[#BFC2C6] leading-relaxed">
+                          {lang === "ar"
+                            ? (heroCopyActiveTab === "BOTH" ? heroBothSubtitleAr : heroCopyActiveTab === "SHOES_ONLY" ? heroShoesSubtitleAr : heroClothingSubtitleAr)
+                            : (heroCopyActiveTab === "BOTH" ? heroBothSubtitleEn : heroCopyActiveTab === "SHOES_ONLY" ? heroShoesSubtitleEn : heroClothingSubtitleEn)}
+                        </p>
+                        <div className="pt-2">
+                          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white text-[#111214] font-heading text-xs font-bold uppercase tracking-wider shadow-sm">
+                            <span>
+                              {lang === "ar"
+                                ? (heroCopyActiveTab === "BOTH" ? heroBothBtnTextAr : heroCopyActiveTab === "SHOES_ONLY" ? heroShoesBtnTextAr : heroClothingBtnTextAr)
+                                : (heroCopyActiveTab === "BOTH" ? heroBothBtnTextEn : heroCopyActiveTab === "SHOES_ONLY" ? heroShoesBtnTextEn : heroClothingBtnTextEn)}
+                            </span>
+                            <ArrowRight className="w-3.5 h-3.5" />
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Inputs Form based on active Tab */}
+                    {heroCopyActiveTab === "BOTH" && (
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="space-y-1.5">
+                          <label className="text-xs font-bold text-jet block">
+                            {lang === "ar" ? "العنوان الرئيسي (عربي) - وضع الاثنين" : "Main Headline (AR) - Both Mode"}
+                          </label>
+                          <input
+                            type="text"
+                            value={heroBothHeadlineAr}
+                            onChange={(e) => setHeroBothHeadlineAr(e.target.value)}
+                            placeholder="اخطُ في مسارك الخاص."
+                            className="w-full text-xs p-3 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none font-bold"
+                          />
+                        </div>
+                        <div className="space-y-1.5">
+                          <label className="text-xs font-bold text-jet block">
+                            {lang === "ar" ? "العنوان الرئيسي (English) - وضع الاثنين" : "Main Headline (EN) - Both Mode"}
+                          </label>
+                          <input
+                            type="text"
+                            value={heroBothHeadlineEn}
+                            onChange={(e) => setHeroBothHeadlineEn(e.target.value)}
+                            placeholder="STEP INTO YOUR OWN LANE."
+                            className="w-full text-xs p-3 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none font-bold"
+                          />
+                        </div>
+
+                        <div className="space-y-1.5 md:col-span-2">
+                          <label className="text-xs font-bold text-jet block">
+                            {lang === "ar" ? "الوصف التسويقي (عربي) - وضع الاثنين" : "Marketing Subtitle (AR) - Both Mode"}
+                          </label>
+                          <textarea
+                            rows={2}
+                            value={heroBothSubtitleAr}
+                            onChange={(e) => setHeroBothSubtitleAr(e.target.value)}
+                            placeholder="أحذية فاخرة وملابس ستريت وير عصرية تعبّر عن هويتك المتفردة وأسلوبك الاستثنائي."
+                            className="w-full text-xs p-3 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none"
+                          />
+                        </div>
+                        <div className="space-y-1.5 md:col-span-2">
+                          <label className="text-xs font-bold text-jet block">
+                            {lang === "ar" ? "الوصف التسويقي (English) - وضع الاثنين" : "Marketing Subtitle (EN) - Both Mode"}
+                          </label>
+                          <textarea
+                            rows={2}
+                            value={heroBothSubtitleEn}
+                            onChange={(e) => setHeroBothSubtitleEn(e.target.value)}
+                            placeholder="Premium footwear & modern luxury streetwear crafted for distinct individuality."
+                            className="w-full text-xs p-3 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none"
+                          />
+                        </div>
+
+                        <div className="space-y-1.5">
+                          <label className="text-xs font-bold text-jet block">
+                            {lang === "ar" ? "نص زرار التسوق (عربي)" : "Button Text (AR)"}
+                          </label>
+                          <input
+                            type="text"
+                            value={heroBothBtnTextAr}
+                            onChange={(e) => setHeroBothBtnTextAr(e.target.value)}
+                            placeholder="تسوق المجموعة"
+                            className="w-full text-xs p-3 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none font-bold"
+                          />
+                        </div>
+                        <div className="space-y-1.5">
+                          <label className="text-xs font-bold text-jet block">
+                            {lang === "ar" ? "نص زرار التسوق (English)" : "Button Text (EN)"}
+                          </label>
+                          <input
+                            type="text"
+                            value={heroBothBtnTextEn}
+                            onChange={(e) => setHeroBothBtnTextEn(e.target.value)}
+                            placeholder="SHOP COLLECTION"
+                            className="w-full text-xs p-3 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none font-bold"
+                          />
+                        </div>
+                      </div>
+                    )}
+
+                    {heroCopyActiveTab === "SHOES_ONLY" && (
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="space-y-1.5">
+                          <label className="text-xs font-bold text-jet block">
+                            {lang === "ar" ? "العنوان الرئيسي (عربي) - وضع الأحذية فقط" : "Main Headline (AR) - Shoes Mode"}
+                          </label>
+                          <input
+                            type="text"
+                            value={heroShoesHeadlineAr}
+                            onChange={(e) => setHeroShoesHeadlineAr(e.target.value)}
+                            placeholder="فخامة في كل خطوة."
+                            className="w-full text-xs p-3 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none font-bold"
+                          />
+                        </div>
+                        <div className="space-y-1.5">
+                          <label className="text-xs font-bold text-jet block">
+                            {lang === "ar" ? "العنوان الرئيسي (English) - وضع الأحذية فقط" : "Main Headline (EN) - Shoes Mode"}
+                          </label>
+                          <input
+                            type="text"
+                            value={heroShoesHeadlineEn}
+                            onChange={(e) => setHeroShoesHeadlineEn(e.target.value)}
+                            placeholder="STEP INTO LUXURY."
+                            className="w-full text-xs p-3 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none font-bold"
+                          />
+                        </div>
+
+                        <div className="space-y-1.5 md:col-span-2">
+                          <label className="text-xs font-bold text-jet block">
+                            {lang === "ar" ? "الوصف التسويقي (عربي) - وضع الأحذية فقط" : "Marketing Subtitle (AR) - Shoes Mode"}
+                          </label>
+                          <textarea
+                            rows={2}
+                            value={heroShoesSubtitleAr}
+                            onChange={(e) => setHeroShoesSubtitleAr(e.target.value)}
+                            placeholder="سنيكرز وأحذية حصرية بتصاميم استثنائية وأداء يجمع بين الأناقة والراحة المطلقة."
+                            className="w-full text-xs p-3 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none"
+                          />
+                        </div>
+                        <div className="space-y-1.5 md:col-span-2">
+                          <label className="text-xs font-bold text-jet block">
+                            {lang === "ar" ? "الوصف التسويقي (English) - وضع الأحذية فقط" : "Marketing Subtitle (EN) - Shoes Mode"}
+                          </label>
+                          <textarea
+                            rows={2}
+                            value={heroShoesSubtitleEn}
+                            onChange={(e) => setHeroShoesSubtitleEn(e.target.value)}
+                            placeholder="Exclusive sneakers & premium footwear engineered for bold presence and supreme comfort."
+                            className="w-full text-xs p-3 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none"
+                          />
+                        </div>
+
+                        <div className="space-y-1.5">
+                          <label className="text-xs font-bold text-jet block">
+                            {lang === "ar" ? "نص زرار التسوق (عربي)" : "Button Text (AR)"}
+                          </label>
+                          <input
+                            type="text"
+                            value={heroShoesBtnTextAr}
+                            onChange={(e) => setHeroShoesBtnTextAr(e.target.value)}
+                            placeholder="تسوق الأحذية"
+                            className="w-full text-xs p-3 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none font-bold"
+                          />
+                        </div>
+                        <div className="space-y-1.5">
+                          <label className="text-xs font-bold text-jet block">
+                            {lang === "ar" ? "نص زرار التسوق (English)" : "Button Text (EN)"}
+                          </label>
+                          <input
+                            type="text"
+                            value={heroShoesBtnTextEn}
+                            onChange={(e) => setHeroShoesBtnTextEn(e.target.value)}
+                            placeholder="SHOP FOOTWEAR"
+                            className="w-full text-xs p-3 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none font-bold"
+                          />
+                        </div>
+                      </div>
+                    )}
+
+                    {heroCopyActiveTab === "CLOTHING_ONLY" && (
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="space-y-1.5">
+                          <label className="text-xs font-bold text-jet block">
+                            {lang === "ar" ? "العنوان الرئيسي (عربي) - وضع الملابس فقط" : "Main Headline (AR) - Clothing Mode"}
+                          </label>
+                          <input
+                            type="text"
+                            value={heroClothingHeadlineAr}
+                            onChange={(e) => setHeroClothingHeadlineAr(e.target.value)}
+                            placeholder="أناقة تعبّر عن حضورك."
+                            className="w-full text-xs p-3 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none font-bold"
+                          />
+                        </div>
+                        <div className="space-y-1.5">
+                          <label className="text-xs font-bold text-jet block">
+                            {lang === "ar" ? "العنوان الرئيسي (English) - وضع الملابس فقط" : "Main Headline (EN) - Clothing Mode"}
+                          </label>
+                          <input
+                            type="text"
+                            value={heroClothingHeadlineEn}
+                            onChange={(e) => setHeroClothingHeadlineEn(e.target.value)}
+                            placeholder="WEAR YOUR IDENTITY."
+                            className="w-full text-xs p-3 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none font-bold"
+                          />
+                        </div>
+
+                        <div className="space-y-1.5 md:col-span-2">
+                          <label className="text-xs font-bold text-jet block">
+                            {lang === "ar" ? "الوصف التسويقي (عربي) - وضع الملابس فقط" : "Marketing Subtitle (AR) - Clothing Mode"}
+                          </label>
+                          <textarea
+                            rows={2}
+                            value={heroClothingSubtitleAr}
+                            onChange={(e) => setHeroClothingSubtitleAr(e.target.value)}
+                            placeholder="ملابس ستريت وير عصرية وتصاميم فاخرة صُممت لتبرز تفرد أسلوبك في كل إطلالة."
+                            className="w-full text-xs p-3 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none"
+                          />
+                        </div>
+                        <div className="space-y-1.5 md:col-span-2">
+                          <label className="text-xs font-bold text-jet block">
+                            {lang === "ar" ? "الوصف التسويقي (English) - وضع الملابس فقط" : "Marketing Subtitle (EN) - Clothing Mode"}
+                          </label>
+                          <textarea
+                            rows={2}
+                            value={heroClothingSubtitleEn}
+                            onChange={(e) => setHeroClothingSubtitleEn(e.target.value)}
+                            placeholder="Modern luxury streetwear & premium apparel designed for distinctive street presence."
+                            className="w-full text-xs p-3 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none"
+                          />
+                        </div>
+
+                        <div className="space-y-1.5">
+                          <label className="text-xs font-bold text-jet block">
+                            {lang === "ar" ? "نص زرار التسوق (عربي)" : "Button Text (AR)"}
+                          </label>
+                          <input
+                            type="text"
+                            value={heroClothingBtnTextAr}
+                            onChange={(e) => setHeroClothingBtnTextAr(e.target.value)}
+                            placeholder="تسوق الملابس"
+                            className="w-full text-xs p-3 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none font-bold"
+                          />
+                        </div>
+                        <div className="space-y-1.5">
+                          <label className="text-xs font-bold text-jet block">
+                            {lang === "ar" ? "نص زرار التسوق (English)" : "Button Text (EN)"}
+                          </label>
+                          <input
+                            type="text"
+                            value={heroClothingBtnTextEn}
+                            onChange={(e) => setHeroClothingBtnTextEn(e.target.value)}
+                            placeholder="SHOP CLOTHING"
+                            className="w-full text-xs p-3 border border-silver/70 rounded-xl bg-white text-jet focus:border-jet outline-none font-bold"
+                          />
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Action Buttons: Save & Reset Defaults */}
+                    <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-silver/40">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (heroCopyActiveTab === "BOTH") {
+                            setHeroBothHeadlineEn("STEP INTO YOUR OWN LANE.");
+                            setHeroBothHeadlineAr("اخطُ في مسارك الخاص.");
+                            setHeroBothSubtitleEn("Premium footwear & modern luxury streetwear crafted for distinct individuality.");
+                            setHeroBothSubtitleAr("أحذية فاخرة وملابس ستريت وير عصرية تعبّر عن هويتك المتفردة وأسلوبك الاستثنائي.");
+                            setHeroBothBtnTextEn("SHOP COLLECTION");
+                            setHeroBothBtnTextAr("تسوق المجموعة");
+                          } else if (heroCopyActiveTab === "SHOES_ONLY") {
+                            setHeroShoesHeadlineEn("STEP INTO LUXURY.");
+                            setHeroShoesHeadlineAr("فخامة في كل خطوة.");
+                            setHeroShoesSubtitleEn("Exclusive sneakers & premium footwear engineered for bold presence and supreme comfort.");
+                            setHeroShoesSubtitleAr("سنيكرز وأحذية حصرية بتصاميم استثنائية وأداء يجمع بين الأناقة والراحة المطلقة.");
+                            setHeroShoesBtnTextEn("SHOP FOOTWEAR");
+                            setHeroShoesBtnTextAr("تسوق الأحذية");
+                          } else {
+                            setHeroClothingHeadlineEn("WEAR YOUR IDENTITY.");
+                            setHeroClothingHeadlineAr("أناقة تعبّر عن حضورك.");
+                            setHeroClothingSubtitleEn("Modern luxury streetwear & premium apparel designed for distinctive street presence.");
+                            setHeroClothingSubtitleAr("ملابس ستريت وير عصرية وتصاميم فاخرة صُممت لتبرز تفرد أسلوبك في كل إطلالة.");
+                            setHeroClothingBtnTextEn("SHOP CLOTHING");
+                            setHeroClothingBtnTextAr("تسوق الملابس");
+                          }
+                          showNotification(lang === "ar" ? "تمت استعادة العبارات الافتراضية للوضع الحالي" : "Defaults restored for current mode", "info");
+                        }}
+                        className="text-xs text-neutralgray hover:text-jet underline font-bold cursor-pointer"
+                      >
+                        {lang === "ar" ? "استعادة النصوص الافتراضية لهذا الوضع" : "Restore Defaults for this Mode"}
+                      </button>
+
+                      <button
+                        type="button"
+                        disabled={heroCopySaving}
+                        onClick={handleSaveHeroCopy}
+                        className="bg-[#111214] hover:bg-black text-white text-xs font-bold uppercase tracking-wider px-6 py-2.5 rounded-xl shadow-md flex items-center gap-2 cursor-pointer active:scale-95 transition-all"
+                      >
+                        <Save className="w-4 h-4 text-emerald-400" />
+                        <span>{heroCopySaving ? (lang === "ar" ? "جاري الحفظ..." : "Saving...") : (lang === "ar" ? "حفظ وتطبيق العبارات التسوقية" : "Save Marketing Copy")}</span>
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
 
               <div className="flex flex-wrap items-center justify-between gap-4 border-b border-silver/60 dark:border-white/10 pb-4">

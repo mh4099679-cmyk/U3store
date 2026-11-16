@@ -109,26 +109,39 @@ export default async function HomePage() {
   const shopByCategoryEnabled = settings?.shop_by_category_enabled !== 0;
 
   // Dynamic high-converting luxury marketing copy tailored to store category mode (SHOES_ONLY vs CLOTHING_ONLY vs BOTH)
-  let heroHeadline = isRtl ? "فخامة في كل خطوة." : "STEP INTO LUXURY.";
+  // Fully customizable by admin from the executive dashboard for all 3 modes in Arabic & English
+  let heroHeadline = isRtl
+    ? (settings?.hero_shoes_headline_ar || "فخامة في كل خطوة.")
+    : (settings?.hero_shoes_headline_en || "STEP INTO LUXURY.");
   let heroSubtitle = isRtl
-    ? "سنيكرز وأحذية حصرية بتصاميم استثنائية وأداء يجمع بين الأناقة والراحة المطلقة."
-    : "Exclusive sneakers & premium footwear engineered for bold presence and supreme comfort.";
-  let heroButtonText = isRtl ? "تسوق الأحذية" : "SHOP FOOTWEAR";
+    ? (settings?.hero_shoes_subtitle_ar || "سنيكرز وأحذية حصرية بتصاميم استثنائية وأداء يجمع بين الأناقة والراحة المطلقة.")
+    : (settings?.hero_shoes_subtitle_en || "Exclusive sneakers & premium footwear engineered for bold presence and supreme comfort.");
+  let heroButtonText = isRtl
+    ? (settings?.hero_shoes_btn_text_ar || "تسوق الأحذية")
+    : (settings?.hero_shoes_btn_text_en || "SHOP FOOTWEAR");
   let heroButtonLink = "/shoes";
 
   if (visibleCategories === "BOTH") {
-    heroHeadline = isRtl ? "اخطُ في مسارك الخاص." : "STEP INTO YOUR OWN LANE.";
+    heroHeadline = isRtl
+      ? (settings?.hero_both_headline_ar || "اخطُ في مسارك الخاص.")
+      : (settings?.hero_both_headline_en || "STEP INTO YOUR OWN LANE.");
     heroSubtitle = isRtl
-      ? "أحذية فاخرة وملابس ستريت وير عصرية تعبّر عن هويتك المتفردة وأسلوبك الاستثنائي."
-      : "Premium footwear & modern luxury streetwear crafted for distinct individuality.";
-    heroButtonText = isRtl ? "تسوق المجموعة" : "SHOP COLLECTION";
+      ? (settings?.hero_both_subtitle_ar || "أحذية فاخرة وملابس ستريت وير عصرية تعبّر عن هويتك المتفردة وأسلوبك الاستثنائي.")
+      : (settings?.hero_both_subtitle_en || "Premium footwear & modern luxury streetwear crafted for distinct individuality.");
+    heroButtonText = isRtl
+      ? (settings?.hero_both_btn_text_ar || "تسوق المجموعة")
+      : (settings?.hero_both_btn_text_en || "SHOP COLLECTION");
     heroButtonLink = "/shop";
   } else if (visibleCategories === "CLOTHING_ONLY") {
-    heroHeadline = isRtl ? "أناقة تعبّر عن حضورك." : "WEAR YOUR IDENTITY.";
+    heroHeadline = isRtl
+      ? (settings?.hero_clothing_headline_ar || "أناقة تعبّر عن حضورك.")
+      : (settings?.hero_clothing_headline_en || "WEAR YOUR IDENTITY.");
     heroSubtitle = isRtl
-      ? "ملابس ستريت وير عصرية وتصاميم فاخرة صُممت لتبرز تفرد أسلوبك في كل إطلالة."
-      : "Modern luxury streetwear & premium apparel designed for distinctive street presence.";
-    heroButtonText = isRtl ? "تسوق الملابس" : "SHOP CLOTHING";
+      ? (settings?.hero_clothing_subtitle_ar || "ملابس ستريت وير عصرية وتصاميم فاخرة صُممت لتبرز تفرد أسلوبك في كل إطلالة.")
+      : (settings?.hero_clothing_subtitle_en || "Modern luxury streetwear & premium apparel designed for distinctive street presence.");
+    heroButtonText = isRtl
+      ? (settings?.hero_clothing_btn_text_ar || "تسوق الملابس")
+      : (settings?.hero_clothing_btn_text_en || "SHOP CLOTHING");
     heroButtonLink = "/clothing";
   }
 
